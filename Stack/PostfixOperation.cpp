@@ -2,42 +2,10 @@
 #include <string>
 #include "Stack.cpp"
 
-#define POSTFIX_EXP "34 4 + 4 5 - *"
+#define POSTFIX_EXP "34 4 + 10 + 4 5 - *"
 
 using namespace std;
-
-
-int postfixOperation(int first_operand, int second_operand, string operators)
-{
-    int result = 0;
-
-    if (operators == " +")
-    {
-        result = first_operand + second_operand;
-    }
-    else if (operators == " -")
-    {
-        result = first_operand - second_operand;
-    }
-    else if (operators == " *")
-    {
-        result = first_operand * second_operand;
-    }
-    else if (operators == " /")
-    {
-        result = first_operand / second_operand;
-    }
-    else if (operators == " %")
-    {
-        result = first_operand % second_operand;
-    }
-    else
-    {
-        cout << "Invalid operator: " << operators << endl;
-    }
-
-    return result;
-}
+using namespace stackk;
 
 int main()
 {
@@ -67,13 +35,12 @@ int main()
                 int second_operand = stack1.pop();
                 int first_operand = stack1.pop();
 
-                int resultt = postfixOperation(first_operand, second_operand, operatorr);
+                int resultt = arthematicOperation(first_operand, second_operand, operatorr);
                 stack1.push(resultt);
             }
         }
     }
     
-    stack1.display();
     int final_result = stack1.pop();
     cout<<"The final result of postfix expression is: "<<final_result<<endl;
     return 0;
