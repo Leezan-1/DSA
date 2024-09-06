@@ -24,8 +24,7 @@ namespace stackk
 
         ~Stack()
         {
-            cout << endl
-                 << "Stack Destroyed";
+            cout << "Stack Destroyed";
         }
 
         bool isEmpty()
@@ -103,34 +102,36 @@ namespace stackk
 
     int arthematicOperation(int first_operand, int second_operand, string operators)
     {
-        int result = 0;
 
-        if (operators == " +")
+        if (operators == "+")
+            return first_operand + second_operand;
+
+        else if (operators == "-")
+            return first_operand - second_operand;
+
+        else if (operators == "*")
+            return first_operand * second_operand;
+
+        else if (operators == "/")
         {
-            result = first_operand + second_operand;
+            if (second_operand != 0)
+                return first_operand / second_operand;
+            else
+                cerr << "Division by zero"<<endl;
         }
-        else if (operators == " -")
+
+        else if (operators == "%")
         {
-            result = first_operand - second_operand;
+            if (second_operand != 0)
+            return first_operand % second_operand;
+            else 
+                cerr << "Division by zero" <<endl;
+            
         }
-        else if (operators == " *")
-        {
-            result = first_operand * second_operand;
-        }
-        else if (operators == " /")
-        {
-            result = first_operand / second_operand;
-        }
-        else if (operators == " %")
-        {
-            result = first_operand % second_operand;
-        }
+
         else
-        {
-            cout << "Invalid operator: " << operators << endl;
-        }
-
-        return result;
+            throw invalid_argument("Unknown operator");
+            return 0;
     }
 
-} // namespace name
+} // namespace stackk
