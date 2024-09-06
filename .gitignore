@@ -1,5 +1,8 @@
 .vscode/
-Cpp\ Basics/build/
-Cpp\ Basics/DynamicMemory
-Cpp\ Basics/PassByReference
+build/
+DynamicMemory
+PassByReference
 PostfixOperation
+PrefixOperation
+Stack
+DSA.code-workspace

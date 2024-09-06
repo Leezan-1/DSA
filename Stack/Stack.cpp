@@ -7,8 +7,7 @@ using namespace std;
 class Stack
 {
 private:
-    int top;
-    int array[STACK_SIZE];
+    int top, stack_array[STACK_SIZE];
 
 public:
     Stack()
@@ -16,9 +15,24 @@ public:
         top = -1;
         for (int i = 0; i < STACK_SIZE; i++)
         {
-            array[i] = 0;
+            stack_array[i] = 0;
         }
         cout << "New Stack Created of size: " << STACK_SIZE << endl;
+    }
+
+    ~Stack()
+    {
+        cout << "Stack Destroyed" << endl;
+    }
+
+    bool isEmpty()
+    {
+        return (top == -1) ? true : false;
+    }
+
+    bool isFull()
+    {
+        return (top == STACK_SIZE - 1) ? true : false;
     }
 
     int push(int val)
@@ -31,9 +45,9 @@ public:
         else
         {
             top++;
-            array[top] = val;
+            stack_array[top] = val;
             cout << val << " is pushed at position " << top << " of stack." << endl;
-            return val;
+            return top;
         }
     }
 
@@ -46,27 +60,17 @@ public:
         }
         else
         {
-            int value = array[top];
-            array[top] = 0;
+            int value = stack_array[top];
+            stack_array[top] = 0;
             cout << value << " is popped from position " << top << endl;
             top--;
             return value;
         }
     }
 
-    bool isEmpty()
-    {
-        return (top == -1) ? true : false;
-    }
-
-    bool isFull()
-    {
-        return (top == STACK_SIZE-1) ? true : false;
-    }
-
     int peek(int pos)
     {
-        return array[pos];
+        return stack_array[pos];
     }
 
     int count()
@@ -76,8 +80,8 @@ public:
 
     int change(int pos, int val)
     {
-        int prevVal = array[pos];
-        array[pos] = val;
+        int prevVal = stack_array[pos];
+        stack_array[pos] = val;
         cout << "Value changed at location" << pos << endl;
         return prevVal;
     }
@@ -85,11 +89,11 @@ public:
     void display()
     {
         cout << "All values in the stack are" << endl;
-        for (int i = STACK_SIZE-1; i >= 0; i--)
+        for (int i = STACK_SIZE - 1; i >= 0; i--)
         {
-            cout << "|" << "\t" << array[i] << "\t" << "|" << endl;
+            cout << "|" << "\t" << stack_array[i] << "\t" << "|" << endl;
         }
-        cout << endl
+        cout << "Top value is: " << top
              << endl;
     }
 };
@@ -116,7 +120,7 @@ int main()
         cin >> option;
         cout << endl;
 
-        switch (option) //switch case for options that are selected
+        switch (option) // switch case for options that are selected
         {
         case 1: //  Push
             cout << "Enter the value to push to stack: ";
