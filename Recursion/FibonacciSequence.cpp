@@ -15,11 +15,13 @@ unsigned int fibonacci(int n)
 
 int main()
 {
-    unsigned int length = 30;
+    unsigned  int length = 30;
 
-    cout << "Enter the length of fibonacci series: " << endl;
-    // cin>>length;
+    // User Input
+    cout << "Enter the length of fibonacci series: ";
+    cin>>length;
 
+    // Final Output 
     cout << "The fibonacci sequences are: ";
     for (size_t i = length; i >= 0; i--)
     {
