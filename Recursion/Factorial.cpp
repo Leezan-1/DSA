@@ -2,21 +2,31 @@
 
 using namespace std;
 
-int factorial(int n)
+size_t factorial(size_t n)
 {
-    return 0; 
+
+    if (n == 0)
+    {
+        cout << "0! = ";
+        return 1;
+    }
+    else
+    {
+        cout << n << " x ";
+        return n * factorial(n - 1);
+    }
 }
 
 int main()
 {
-    size_t number;
+    size_t number = 10;
 
     // User Input
-    cout<<"Enter the number that you want to find factorial of: ";
-    cin>>number;
-
+    cout << "Enter the number that you want to find factorial of: " << number;
+    // cin>>number;
 
     // Final Output
-    cout<<number<<"! is: "<<factorial(number)<<endl;
+    cout << endl
+         << number << "! = " << factorial(number) << endl;
     return 0;
 }
