@@ -19,11 +19,11 @@ size_t factorial(size_t n)
 
 int main()
 {
-    size_t number = 10;
+    size_t number;
 
     // User Input
-    cout << "Enter the number that you want to find factorial of: " << number;
-    // cin>>number;
+    cout << "Enter the number that you want to find factorial of: ";
+    cin>>number;
 
     // Final Output
     cout << endl
