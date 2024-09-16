@@ -1,7 +1,7 @@
 #include <iostream>
 #include "../Stack/Stack.cpp"
 
-#define TOWER_HEIGHT 1
+#define TOWER_HEIGHT 2
 
 using namespace std;
 stackk::Stack tower1, tower2, tower3;
@@ -9,20 +9,39 @@ stackk::Stack tower1, tower2, tower3;
 void move_disk(int from_tower, int to_tower)
 {
     int disk;
-    if (from_tower == 1)
+
+    switch (from_tower)
+    {
+    case 1:
         disk = tower1.pop();
-    else if (from_tower == 2)
-        disk = tower1.pop();
-    else
+        break;
+    case 2:
+        disk = tower2.pop();
+        break;
+    case 3:
         disk = tower3.pop();
-    if (to_tower == 1)
+        break;
+    default:
+        throw invalid_argument("invalid tower");
+    }
+
+    switch (to_tower)
+    {
+    case 1:
         tower1.push(disk);
-    else if (to_tower == 2)
+        break;
+    case 2:
         tower2.push(disk);
-    else
+        break;
+    case 3:
         tower3.push(disk);
-    
-    cout << "Tower "<<from_tower<<" --> Tower "<<to_tower<<endl;
+        break;
+    default:
+        throw invalid_argument("invalid tower");
+    }
+
+
+    cout << "Tower " << from_tower << " --> Tower " << to_tower << endl;
 }
 
 void displayTower() // displays the tower of hanoi
@@ -46,7 +65,7 @@ int main()
         tower1.push(i);
     }
     displayTower();
-    move_disk(2, 3);
+    move_disk(1, 3);
     displayTower();
     return 0;
 }
