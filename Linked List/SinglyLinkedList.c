@@ -18,6 +18,7 @@ int countNodes(Node *head) // This function counts the number of nodes present i
 
     while (head != NULL)
     {
+        const int NODE_SIZE = sizeof(Node);
         count++;
         head = head->link;
     }
@@ -66,8 +67,8 @@ int main()
         current->data = 10;
         current->link = NULL;
         head->link = current;
-        /* 
-        The data located at malloc doesnot gets lost until it is freed 
+        /*
+        The data located at malloc doesnot gets lost until it is freed
          even if the 'current' pointer variable gets delete at the end of the scope
         */
     }
