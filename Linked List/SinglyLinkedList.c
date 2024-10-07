@@ -98,6 +98,15 @@ void insertNodeAtPosition(Node **head,int pos, int value)
     return;
 }
 
+Node *deleteNodeAtFront(Node *front_node)
+{
+    Node *temp = front_node;
+    front_node = front_node->link;
+
+    free(temp);
+    return front_node;
+}
+
 int main()
 {
     Node *head = malloc(NODE_SIZE);
@@ -117,6 +126,9 @@ int main()
     // This is the fourth node of linked list
     data = 30;
     current = insertNodeAtEnd(current, data);
+
+    // Deleting the front node.
+    head = deleteNodeAtFront(head);
 
     // This adds new node at front, shift head pointer to new node;
     data = 100;
