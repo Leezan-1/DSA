@@ -24,18 +24,18 @@ int countNodes(Node *front_node) // This function counts the number of nodes pre
     return count;
 }
 
-void displayNodes(Node *pointer) // This function prints the linked list;
+void displayNodes(Node *front_node) // This function prints the linked list;
 {
-    if (pointer == NULL)
+    if (front_node == NULL)
     {
-        printf("linked list is empty!\n");
+        printf("\nlinked list is empty!\n");
         return;
     }
-    printf("The Linked list is: |%p| ", pointer);
-    while (pointer != NULL)
+    printf("The Linked list is: |%p| ", front_node);
+    while (front_node != NULL)
     {
-        printf("----> |%d|%p| ", pointer->data, pointer->link);
-        pointer = pointer->link;
+        printf("----> |%d|%p| ", front_node->data, front_node->link);
+        front_node = front_node->link;
     }
 
     printf("\n");
@@ -79,23 +79,26 @@ void insertNodeAtPosition(Node **head, int pos, int value)
     Node *temp = malloc(NODE_SIZE);
     temp->data = value;
 
-    if (pos == 0)
+    if (pos <= 0 || pos > countNodes(*head))
+    {
+        printf("invalid position");
+    }
+
+    else if (pos == 1)
     {
         temp->link = *head;
         *head = temp;
-        return;
     }
 
-    Node *node_bef_pos = *head;
-    for (size_t i = 0; i < pos - 1; i++)
+    else
     {
-        node_bef_pos = node_bef_pos->link;
+        Node *node_bef_pos = *head;
+        for (size_t i = 1; i < pos - 1; i++)
+            node_bef_pos = node_bef_pos->link;
+
+        temp->link = node_bef_pos->link;
+        node_bef_pos->link = temp;
     }
-
-    temp->link = node_bef_pos->link;
-    node_bef_pos->link = temp;
-
-    return;
 }
 
 Node *deleteNodeAtFront(Node *front_node)
@@ -124,7 +127,7 @@ Node *deleteNodeAtEnd(Node *front_node)
     {
         // here i commented the other method to do same stuff but with 2 pointer var involved
 
-        Node *last_node = front_node ; // *second_last_node = front_node; 
+        Node *last_node = front_node; // *second_last_node = front_node;
 
         while (last_node->link->link != NULL)
         {
@@ -132,12 +135,59 @@ Node *deleteNodeAtEnd(Node *front_node)
             last_node = last_node->link;
         }
 
-        //second_last_node->link = NULL; free(last_node); last_node = NULL;
+        // second_last_node->link = NULL; free(last_node); last_node = NULL;
         free(last_node->link);
         last_node->link = NULL;
 
         return front_node;
     }
+}
+
+void deleteNodeAtPosition(Node **head, int pos)
+{
+    Node *node_at_pos = *head;
+    if (pos <= 0 || pos > countNodes(*head))
+    {
+        printf("invalid position");
+    }
+    else if (pos == 1)
+    {
+        *head = node_at_pos->link;
+        printf("%p\n", node_at_pos);
+        free(node_at_pos);
+        node_at_pos = NULL;
+    }
+    else
+    {
+        Node *node_bef_pos = *head;
+        for (size_t i = 1; i <= pos - 1; i++)
+        {
+            node_bef_pos = node_at_pos;
+            node_at_pos = node_at_pos->link;
+        }
+        node_bef_pos->link = node_at_pos->link;
+        free(node_at_pos);
+        node_at_pos = NULL;
+    }
+
+    // for (size_t i = 1; i < pos; i++)
+    // {
+    //     node_bef_pos = node_at_pos;
+    //     node_at_pos = node_at_pos->link;
+    // }
+
+    // node_bef_pos = node_at_pos->link;
+    // free(node_at_pos);
+    // node_at_pos = NULL;
+}
+
+void deleteEntireList(Node **head)
+{
+    while (*head != NULL)
+    {
+        *head = deleteNodeAtFront(*head);
+    }
+    /* Here head is run in loop until it present null, the front node is deleted in each iteration*/
 }
 
 int main()
@@ -165,7 +215,7 @@ int main()
     head = insertNodeAtFront(head, data);
 
     // Adding node at 3rd position; since pos starts from 0.
-    data = 50, position = 2;
+    data = 50, position = 4;
     insertNodeAtPosition(&head, position, data);
 
     printf("The number of nodes in linked list is %d \n", countNodes(head));
@@ -176,6 +226,17 @@ int main()
 
     // deleting node at last
     head = deleteNodeAtEnd(head);
+
+    // deleting node at certain position
+    position = 2;
+    deleteNodeAtPosition(&head, position);
+
+    printf("\n");
+    displayNodes(head);
+
+    deleteEntireList(&head);
+
+    printf("\n");
     displayNodes(head);
 
     return 0;
