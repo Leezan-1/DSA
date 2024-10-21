@@ -31,13 +31,12 @@ void displayNodes(Node *front_node) // This function prints the linked list;
         printf("\nlinked list is empty!\n");
         return;
     }
-    printf("The Linked list is: |%p| ", front_node);
+    printf("Add in head: |%p|\n", front_node);
     while (front_node != NULL)
     {
-        printf("----> |%d|%p| ", front_node->data, front_node->link);
+        printf(" |%d|%p| ---> ", front_node->data, front_node->link);
         front_node = front_node->link;
     }
-
     printf("\n");
 
     /*
@@ -261,6 +260,6 @@ int main()
 
     printf("\n");
     displayNodes(head);
-    
+
     return 0;
 }
