@@ -118,28 +118,26 @@ Node *deleteNodeAtEnd(Node *front_node)
     else if (front_node->link == NULL)
     {
         free(front_node);
-        printf("dkjfsd\n");
         return NULL;
     }
-    else 
+    else
     {
-        Node *last_node = front_node, *second_last_node = front_node;
+        // here i commented the other method to do same stuff but with 2 pointer var involved
 
-        while (last_node->link != NULL)
+        Node *last_node = front_node ; // *second_last_node = front_node; 
+
+        while (last_node->link->link != NULL)
         {
-        second_last_node = last_node;
-        last_node = last_node->link;
+            // second_last_node = last_node; last_node = last_node->link;
+            last_node = last_node->link;
         }
-        
-        second_last_node->link = NULL;
-        free(last_node);
-        last_node = NULL;
+
+        //second_last_node->link = NULL; free(last_node); last_node = NULL;
+        free(last_node->link);
+        last_node->link = NULL;
 
         return front_node;
-        
     }
-    
-    
 }
 
 int main()
@@ -162,7 +160,6 @@ int main()
     data = 30;
     current = insertNodeAtEnd(current, data);
 
-
     // This adds new node at front, shift head pointer to new node;
     data = 100;
     head = insertNodeAtFront(head, data);
@@ -171,10 +168,9 @@ int main()
     data = 50, position = 2;
     insertNodeAtPosition(&head, position, data);
 
-
     printf("The number of nodes in linked list is %d \n", countNodes(head));
     displayNodes(head);
-    
+
     // Deleting the front node.
     head = deleteNodeAtFront(head);
 
@@ -183,5 +179,4 @@ int main()
     displayNodes(head);
 
     return 0;
-
 }
