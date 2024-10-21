@@ -190,6 +190,22 @@ void deleteEntireList(Node **head)
     /* Here head is run in loop until it present null, the front node is deleted in each iteration*/
 }
 
+Node *reverseList(Node *head)
+{
+    Node *prev_node = NULL;
+    Node *next_node = NULL;
+
+    while (head != NULL)
+    {
+        next_node = head->link;
+        head->link = prev_node;
+        prev_node = head;
+        head = next_node;
+    }
+    head = prev_node;
+    return head;
+}
+
 int main()
 {
     Node *head = malloc(NODE_SIZE);
@@ -221,6 +237,12 @@ int main()
     printf("The number of nodes in linked list is %d \n", countNodes(head));
     displayNodes(head);
 
+    // REVERSES THE LINKED LIST
+    head = reverseList(head);
+
+    printf("\n");
+    displayNodes(head);
+
     // Deleting the front node.
     head = deleteNodeAtFront(head);
 
@@ -234,10 +256,11 @@ int main()
     printf("\n");
     displayNodes(head);
 
+    // DELETES ENTIRE LINKED LIST
     deleteEntireList(&head);
 
     printf("\n");
     displayNodes(head);
-
+    
     return 0;
 }
