@@ -38,6 +38,8 @@ void displayNodes(Node *pointer) // This function prints the linked list;
         pointer = pointer->link;
     }
 
+    printf("\n");
+
     /*
     The time complecity to print is O(n) as each node is travesed.
     */
@@ -72,7 +74,7 @@ Node *insertNodeAtFront(Node *front_node, int value)
     return temp;
 }
 
-void insertNodeAtPosition(Node **head,int pos, int value)
+void insertNodeAtPosition(Node **head, int pos, int value)
 {
     Node *temp = malloc(NODE_SIZE);
     temp->data = value;
@@ -85,16 +87,14 @@ void insertNodeAtPosition(Node **head,int pos, int value)
     }
 
     Node *node_bef_pos = *head;
-    for (size_t i = 0; i < pos-1; i++)
-    {   
+    for (size_t i = 0; i < pos - 1; i++)
+    {
         node_bef_pos = node_bef_pos->link;
     }
-    
+
     temp->link = node_bef_pos->link;
     node_bef_pos->link = temp;
-    
 
-    
     return;
 }
 
@@ -104,7 +104,42 @@ Node *deleteNodeAtFront(Node *front_node)
     front_node = front_node->link;
 
     free(temp);
+    temp = NULL;
     return front_node;
+}
+
+Node *deleteNodeAtEnd(Node *front_node)
+{
+    if (front_node == NULL)
+    {
+        printf("linked list is empty\n");
+        return NULL;
+    }
+    else if (front_node->link == NULL)
+    {
+        free(front_node);
+        printf("dkjfsd\n");
+        return NULL;
+    }
+    else 
+    {
+        Node *last_node = front_node, *second_last_node = front_node;
+
+        while (last_node->link != NULL)
+        {
+        second_last_node = last_node;
+        last_node = last_node->link;
+        }
+        
+        second_last_node->link = NULL;
+        free(last_node);
+        last_node = NULL;
+
+        return front_node;
+        
+    }
+    
+    
 }
 
 int main()
@@ -127,8 +162,6 @@ int main()
     data = 30;
     current = insertNodeAtEnd(current, data);
 
-    // Deleting the front node.
-    head = deleteNodeAtFront(head);
 
     // This adds new node at front, shift head pointer to new node;
     data = 100;
@@ -138,26 +171,17 @@ int main()
     data = 50, position = 2;
     insertNodeAtPosition(&head, position, data);
 
+
     printf("The number of nodes in linked list is %d \n", countNodes(head));
+    displayNodes(head);
+    
+    // Deleting the front node.
+    head = deleteNodeAtFront(head);
+
+    // deleting node at last
+    head = deleteNodeAtEnd(head);
     displayNodes(head);
 
     return 0;
 
-    /*
-        $head only to head points to head of the node;
-        $current is points to the end node. It is changed every time a node is added;
-
-        // The second node of linked list
-    // {
-    //     Node *current = malloc(NODE_SIZE);
-    //     current->data = 10;
-    //     current->link = NULL;
-    //     head->link = current;
-    //     /*
-    //     The data located at malloc doesnot gets lost until it is freed
-    //      even if the 'current' pointer variable gets delete at the end of the scope
-    //      This is a different way to make a node.
-    //     */
-    // }
-    //*/
 }
