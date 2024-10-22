@@ -23,11 +23,10 @@ public:
         data = value;
         link = nullptr;
     }
-    Node(int value, Node *prev_node_addr, Node *node_addr)
+    Node(int value, Node *next_node)
     {
         data = value;
-        link = nullptr;
-        prev_node_addr->link = node_addr;
+        link = next_node;
     }
 };
 
