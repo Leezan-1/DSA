@@ -37,7 +37,7 @@ void displayDoubly(DoublyNode *node) //  DISPLAYS A DOUBLE LINKED LIST NODE FROM
         printf("Linked List is empty");
     else
     {
-        printf("Head: %p\n", node);
+        printf("Nodes: %d, Head: %p\n",countNodes(node), node);
 
         while (node->next_addr != NULL)
         {
@@ -81,16 +81,19 @@ DoublyNode *insertNodeAtEnd(DoublyNode *end_node, int data)
     return temp;
 }
 
-DoublyNode *insertNodeAtPos(DoublyNode **head_addr, int position, int data)
+void insertNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int position, int data)
 //  THIS TAKES ADDR IN HEAD AS FRONT NODE, USER INPUT POSITON AND DATA
 {
     DoublyNode *temp = createNode(data);
     temp->data = data;
     DoublyNode *node_bef_position = *head_addr;
-    if (position == 1)
+    if (position > countNodes(*head_addr) + 1 || position <= 0)
+        printf("invalid position");
+    else if (position == 1)
     {
         temp->next_addr = node_bef_position;
         node_bef_position->prev_addr = temp;
+        *head_addr = temp;
     }
     else
     {
@@ -106,10 +109,10 @@ DoublyNode *insertNodeAtPos(DoublyNode **head_addr, int position, int data)
         temp->prev_addr = node_bef_position;
         if (node_bef_position->next_addr != NULL)
             node_bef_position->next_addr->prev_addr = temp; // stores address of temp node to the pointer of prev address of prev node in the position
-        node_bef_position->next_addr = temp;                // next addr pointer of previous node of the positon stores adrres of new node
+        else
+            *tail_addr = temp;
+        node_bef_position->next_addr = temp; // next addr pointer of previous node of the positon stores adrres of new node
     }
-
-    return temp;
 }
 
 DoublyNode *deleteNodeAtFront(DoublyNode *front_node)
@@ -131,7 +134,7 @@ DoublyNode *deleteNodeAtEnd(DoublyNode *end_node)
 int main()
 {
     int data[] = {10, 20, 30, 40};
-    int pos = 4; // position starts from 1 unlike array i.e 0
+    int pos = 3; // position starts from 1 unlike array i.e 0
 
     HEAD = createNode(data[1]); // This automatically creates a linked list
     TAIL = HEAD;
@@ -141,16 +144,11 @@ int main()
 
     //  adds node to 3rd position of linked list
     int num_of_nodes = countNodes(HEAD);
-    if (pos == 1)
-        HEAD = insertNodeAtPos(&HEAD, pos, data[2]);
-    else if (pos == num_of_nodes + 1)
-        TAIL = insertNodeAtPos(&HEAD, pos, data[2]);
-    else if (pos > num_of_nodes + 1 || pos <= 0)
+    if (pos > num_of_nodes + 1 || pos <= 0)
         printf("position doesn't exist!\n");
     else
-        insertNodeAtPos(&HEAD, pos, data[2]);
+        insertNodeAtPos(&HEAD, &TAIL, pos, data[2]);
 
-    printf("The number of nodes in linked list is: %d\n", countNodes(HEAD));
     displayDoubly(HEAD);
     printf("\n");
 
