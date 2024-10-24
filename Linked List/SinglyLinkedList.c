@@ -75,30 +75,35 @@ Node *insertNodeAtFront(Node *front_node, int value)
 
 void insertNodeAtPosition(Node **head, int pos, int value)
 {
-    Node *temp = malloc(NODE_SIZE);
-    temp->data = value;
+    Node *temp = malloc(NODE_SIZE);  // Allocate memory for the new node
+    temp->data = value;              // Set the value of the new node
 
-    if (pos <= 0 || pos > countNodes(*head))
-    {
-        printf("invalid position");
+    // Validate position (pos should be between 1 and countNodes(*head) + 1)
+    if (pos <= 0 || pos > countNodes(*head) + 1) {
+        printf("Invalid position\n");
     }
 
-    else if (pos == 1)
-    {
+    // Insert at the head if position is 1
+    else if (pos == 1) {
         temp->link = *head;
         *head = temp;
     }
 
-    else
-    {
+    // Insert at position other than the head, including at the end
+    else {
         Node *node_bef_pos = *head;
-        for (size_t i = 1; i < pos - 1; i++)
-            node_bef_pos = node_bef_pos->link;
 
-        temp->link = node_bef_pos->link;
-        node_bef_pos->link = temp;
+        // Traverse to the node just before the desired position
+        for (size_t i = 1; i < pos - 1; i++) {
+            node_bef_pos = node_bef_pos->link;
+        }
+
+        // Insert the new node in the correct position
+        temp->link = node_bef_pos->link;  // The new node points to the next node
+        node_bef_pos->link = temp;        // The previous node points to the new node
     }
 }
+
 
 Node *deleteNodeAtFront(Node *front_node)
 {
@@ -230,7 +235,7 @@ int main()
     head = insertNodeAtFront(head, data);
 
     // Adding node at 3rd position; since pos starts from 0.
-    data = 50, position = 4;
+    data = 50, position = 3;
     insertNodeAtPosition(&head, position, data);
 
     printf("The number of nodes in linked list is %d \n", countNodes(head));

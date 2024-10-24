@@ -29,7 +29,6 @@ int countNodes(DoublyNode *node)
         count++;
     }
     return count;
-    
 }
 
 void displayDoubly(DoublyNode *node) //  DISPLAYS A DOUBLE LINKED LIST NODE FROM THE GIVEN NODE ADDRESS, usually address in head.
@@ -87,26 +86,27 @@ DoublyNode *insertNodeAtPos(DoublyNode **head_addr, int position, int data)
 {
     DoublyNode *temp = createNode(data);
     temp->data = data;
-    DoublyNode *front_node = *head_addr;
+    DoublyNode *node_bef_position = *head_addr;
     if (position == 1)
     {
-        temp->next_addr = front_node;
-        front_node->prev_addr = temp;
+        temp->next_addr = node_bef_position;
+        node_bef_position->prev_addr = temp;
     }
     else
     {
         for (size_t i = 1; i < position - 1; i++)
-            front_node = front_node->next_addr;
+            node_bef_position = node_bef_position->next_addr;
         /*
             the loop runs from 1, starting of linked list node, to second last list.
             the pointer var stores addr of second last node.
             it stores through 3rd node's next node address.
         */
 
-        temp->next_addr = front_node->next_addr; // stores address of next node after the postion.
-        front_node->next_addr->prev_addr = temp; // stores address of temp node to the pointer of prev address of prev node in the position
-        front_node->next_addr = temp;            // next addr pointer of previous node of the positon stores adrres of new node
-        temp->prev_addr = front_node;
+        temp->next_addr = node_bef_position->next_addr; // stores address of next node after the postion.
+        temp->prev_addr = node_bef_position;
+        if (node_bef_position->next_addr != NULL)
+            node_bef_position->next_addr->prev_addr = temp; // stores address of temp node to the pointer of prev address of prev node in the position
+        node_bef_position->next_addr = temp;                // next addr pointer of previous node of the positon stores adrres of new node
     }
 
     return temp;
@@ -120,10 +120,18 @@ DoublyNode *deleteNodeAtFront(DoublyNode *front_node)
     return front_node;
 }
 
+DoublyNode *deleteNodeAtEnd(DoublyNode *end_node)
+{
+    end_node = end_node->prev_addr;
+    free(end_node->next_addr);
+    end_node->next_addr = NULL;
+    return end_node;
+}
+
 int main()
 {
     int data[] = {10, 20, 30, 40};
-    int pos = 3; // position starts from 1 unlike array i.e 0
+    int pos = 4; // position starts from 1 unlike array i.e 0
 
     HEAD = createNode(data[1]); // This automatically creates a linked list
     TAIL = HEAD;
@@ -131,20 +139,22 @@ int main()
     HEAD = insertNodeAtFront(HEAD, data[0]); //  adds node to front of linkedlist
     TAIL = insertNodeAtEnd(TAIL, data[3]);   //  adds node to end of linkedlist
 
-    DoublyNode *node_addr = insertNodeAtPos(&HEAD, pos, data[2]); //  adds node to 3rd position of linked list
+    //  adds node to 3rd position of linked list
+    int num_of_nodes = countNodes(HEAD);
     if (pos == 1)
-        HEAD = node_addr;
-    else if (pos == countNodes(HEAD))
-        TAIL = node_addr;
-    else if (pos > countNodes(HEAD) || pos <= 0)
+        HEAD = insertNodeAtPos(&HEAD, pos, data[2]);
+    else if (pos == num_of_nodes + 1)
+        TAIL = insertNodeAtPos(&HEAD, pos, data[2]);
+    else if (pos > num_of_nodes + 1 || pos <= 0)
         printf("position doesn't exist!\n");
-    
+    else
+        insertNodeAtPos(&HEAD, pos, data[2]);
+
     printf("The number of nodes in linked list is: %d\n", countNodes(HEAD));
     displayDoubly(HEAD);
+    printf("\n");
 
     HEAD = deleteNodeAtFront(HEAD);
+    TAIL = deleteNodeAtEnd(TAIL);
     displayDoubly(HEAD);
-
-
-
 }
