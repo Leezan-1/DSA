@@ -182,24 +182,47 @@ void deleteNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int positio
     free(temp);
 }
 
+DoublyNode *reverseList(DoublyNode *front_node)
+{
+    DoublyNode *temp = front_node->next_addr, *ptr = front_node;
+
+    while (temp != NULL)
+    {
+        ptr->next_addr = ptr->prev_addr;
+        ptr->prev_addr = temp;
+        ptr = temp;
+        temp = ptr->next_addr;
+    }
+    ptr->next_addr = ptr->prev_addr;
+    ptr->prev_addr = temp;
+    return ptr;
+}
+
 int main()
 {
-    int data[] = {10, 20, 30, 40};
+    int data[] = {0, 10, 20, 30, 40, 50};
     int pos = 3; // position starts from 1 unlike array i.e 0
 
-    HEAD = createNode(data[1]); // This automatically creates a linked list
+    HEAD = createNode(data[2]); // This automatically creates a linked list
     TAIL = HEAD;
 
-    HEAD = insertNodeAtFront(HEAD, data[0]); //  adds node to front of linkedlist
-    TAIL = insertNodeAtEnd(TAIL, data[3]);   //  adds node to end of linkedlist
+    HEAD = insertNodeAtFront(HEAD, data[1]); //  adds node to front of linkedlist
+    TAIL = insertNodeAtEnd(TAIL, data[4]);   //  adds node to end of linkedlist
 
     //  adds node to 3rd position of linked list
-    insertNodeAtPos(&HEAD, &TAIL, pos, data[2]);
+    insertNodeAtPos(&HEAD, &TAIL, pos, data[3]);
+    insertNodeAtPos(&HEAD, &TAIL, pos=5, data[5]);
+    insertNodeAtPos(&HEAD, &TAIL, pos=1, data[0]);
     displayDoubly(HEAD);
     printf("\n");
 
     HEAD = deleteNodeAtFront(HEAD);
     TAIL = deleteNodeAtEnd(TAIL);
     deleteNodeAtPos(&HEAD, &TAIL, pos = 2);
+    displayDoubly(HEAD);
+
+    printf("\n");
+
+    HEAD = reverseList(HEAD);
     displayDoubly(HEAD);
 }
