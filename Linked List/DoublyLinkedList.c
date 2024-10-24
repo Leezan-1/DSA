@@ -37,7 +37,7 @@ void displayDoubly(DoublyNode *node) //  DISPLAYS A DOUBLE LINKED LIST NODE FROM
         printf("Linked List is empty");
     else
     {
-        printf("Nodes: %d, Head: %p\n",countNodes(node), node);
+        printf("Nodes: %d, Head: %p\n", countNodes(node), node);
 
         while (node->next_addr != NULL)
         {
@@ -131,6 +131,57 @@ DoublyNode *deleteNodeAtEnd(DoublyNode *end_node)
     return end_node;
 }
 
+void deleteNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int position)
+{
+    // Check if the list is empty
+    if (*head_addr == NULL)
+    {
+        printf("List is empty\n");
+        return;
+    }
+
+    // Get the head node
+    DoublyNode *node_bef_position = *head_addr;
+    DoublyNode *temp;
+
+    // Check for invalid position
+    if (position <= 0 || position > countNodes(*head_addr))
+        printf("Invalid position\n");
+    // Case 1: Deleting the head node
+    else if (position == 1)
+    {
+        temp = *head_addr;            // Node to delete is the head
+        *head_addr = temp->next_addr; // Move head to the next node
+        if (*head_addr != NULL)
+            (*head_addr)->prev_addr = NULL; // Update new head's prev_addr to NULL
+        else
+            *tail_addr = NULL; // If the list becomes empty, update tail
+    }
+    // Case 2: Deleting a node other than the head
+    else
+    {
+        // Traverse to the node just before the target position
+        for (size_t i = 1; i < position - 1; i++)
+            node_bef_position = node_bef_position->next_addr;
+
+        // The node to be deleted is node_bef_position->next_addr
+        temp = node_bef_position->next_addr;
+
+        // Update the next pointer of node_bef_position to skip temp
+        node_bef_position->next_addr = temp->next_addr;
+
+        // Case 3: If we're not deleting the last node, update the prev pointer of the next node
+        if (temp->next_addr != NULL)
+            temp->next_addr->prev_addr = node_bef_position;
+        else
+            // If deleting the last node, update the tail
+            *tail_addr = node_bef_position;
+    }
+
+    // Free the node to be deleted
+    free(temp);
+}
+
 int main()
 {
     int data[] = {10, 20, 30, 40};
@@ -143,16 +194,12 @@ int main()
     TAIL = insertNodeAtEnd(TAIL, data[3]);   //  adds node to end of linkedlist
 
     //  adds node to 3rd position of linked list
-    int num_of_nodes = countNodes(HEAD);
-    if (pos > num_of_nodes + 1 || pos <= 0)
-        printf("position doesn't exist!\n");
-    else
-        insertNodeAtPos(&HEAD, &TAIL, pos, data[2]);
-
+    insertNodeAtPos(&HEAD, &TAIL, pos, data[2]);
     displayDoubly(HEAD);
     printf("\n");
 
     HEAD = deleteNodeAtFront(HEAD);
     TAIL = deleteNodeAtEnd(TAIL);
+    deleteNodeAtPos(&HEAD, &TAIL, pos = 2);
     displayDoubly(HEAD);
 }
