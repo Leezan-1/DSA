@@ -6,11 +6,11 @@ typedef struct SinglyNode // This create a variable acting node of linked list
 {
     int data;
     struct SinglyNode *link;
-} SinglyNode;
+} Node;
 
-const int NODE_SIZE = sizeof(SinglyNode);
+const int NODE_SIZE = sizeof(Node);
 
-int countNodes(SinglyNode *front_node) // This function counts the number of nodes present in linked list
+int countNodes(Node *front_node) // This function counts the number of nodes present in linked list
 {
     int count = 0;
     if (front_node == NULL)
@@ -24,7 +24,7 @@ int countNodes(SinglyNode *front_node) // This function counts the number of nod
     return count;
 }
 
-void displayNodes(SinglyNode *front_node) // This function prints the linked list;
+void displayNodes(Node *front_node) // This function prints the linked list;
 {
     if (front_node == NULL)
     {
@@ -44,9 +44,9 @@ void displayNodes(SinglyNode *front_node) // This function prints the linked lis
     */
 }
 
-SinglyNode *insertNodeAtEnd(SinglyNode *current_end, int value) // This function inserts node with a value at the end of linked list
+Node *insertNodeAtEnd(Node *current_end, int value) // This function inserts node with a value at the end of linked list
 {
-    SinglyNode *temp = malloc(NODE_SIZE);
+    Node *temp = malloc(NODE_SIZE);
     temp->data = value;
     temp->link = NULL;
 
@@ -65,17 +65,17 @@ SinglyNode *insertNodeAtEnd(SinglyNode *current_end, int value) // This function
     */
 }
 
-SinglyNode *insertNodeAtFront(SinglyNode *front_node, int value)
+Node *insertNodeAtFront(Node *front_node, int value)
 {
-    SinglyNode *temp = malloc(NODE_SIZE);
+    Node *temp = malloc(NODE_SIZE);
     temp->data = value;
     temp->link = front_node;
     return temp;
 }
 
-void insertNodeAtPosition(SinglyNode **head, int pos, int value)
+void insertNodeAtPosition(Node **head, int pos, int value)
 {
-    SinglyNode *temp = malloc(NODE_SIZE);  // Allocate memory for the new node
+    Node *temp = malloc(NODE_SIZE);  // Allocate memory for the new node
     temp->data = value;              // Set the value of the new node
 
     // Validate position (pos should be between 1 and countNodes(*head) + 1)
@@ -91,7 +91,7 @@ void insertNodeAtPosition(SinglyNode **head, int pos, int value)
 
     // Insert at position other than the head, including at the end
     else {
-        SinglyNode *node_bef_pos = *head;
+        Node *node_bef_pos = *head;
 
         // Traverse to the node just before the desired position
         for (size_t i = 1; i < pos - 1; i++) {
@@ -105,9 +105,9 @@ void insertNodeAtPosition(SinglyNode **head, int pos, int value)
 }
 
 
-SinglyNode *deleteNodeAtFront(SinglyNode *front_node)
+Node *deleteNodeAtFront(Node *front_node)
 {
-    SinglyNode *temp = front_node;
+    Node *temp = front_node;
     front_node = front_node->link;
 
     free(temp);
@@ -115,7 +115,7 @@ SinglyNode *deleteNodeAtFront(SinglyNode *front_node)
     return front_node;
 }
 
-SinglyNode *deleteNodeAtEnd(SinglyNode *front_node)
+Node *deleteNodeAtEnd(Node *front_node)
 {
     if (front_node == NULL)
     {
@@ -131,7 +131,7 @@ SinglyNode *deleteNodeAtEnd(SinglyNode *front_node)
     {
         // here i commented the other method to do same stuff but with 2 pointer var involved
 
-        SinglyNode *last_node = front_node; // *second_last_node = front_node;
+        Node *last_node = front_node; // *second_last_node = front_node;
 
         while (last_node->link->link != NULL)
         {
@@ -147,9 +147,9 @@ SinglyNode *deleteNodeAtEnd(SinglyNode *front_node)
     }
 }
 
-void deleteNodeAtPosition(SinglyNode **head, int pos)
+void deleteNodeAtPosition(Node **head, int pos)
 {
-    SinglyNode *node_at_pos = *head;
+    Node *node_at_pos = *head;
     if (pos <= 0 || pos > countNodes(*head))
     {
         printf("invalid position");
@@ -163,7 +163,7 @@ void deleteNodeAtPosition(SinglyNode **head, int pos)
     }
     else
     {
-        SinglyNode *node_bef_pos = *head;
+        Node *node_bef_pos = *head;
         for (size_t i = 1; i <= pos - 1; i++)
         {
             node_bef_pos = node_at_pos;
@@ -185,7 +185,7 @@ void deleteNodeAtPosition(SinglyNode **head, int pos)
     // node_at_pos = NULL;
 }
 
-void deleteEntireList(SinglyNode **head)
+void deleteEntireList(Node **head)
 {
     while (*head != NULL)
     {
@@ -194,10 +194,10 @@ void deleteEntireList(SinglyNode **head)
     /* Here head is run in loop until it present null, the front node is deleted in each iteration*/
 }
 
-SinglyNode *reverseList(SinglyNode *head)
+Node *reverseList(Node *head)
 {
-    SinglyNode *prev_node = NULL;
-    SinglyNode *next_node = NULL;
+    Node *prev_node = NULL;
+    Node *next_node = NULL;
 
     while (head != NULL)
     {
@@ -212,8 +212,8 @@ SinglyNode *reverseList(SinglyNode *head)
 
 int main()
 {
-    SinglyNode *head = malloc(NODE_SIZE);
-    SinglyNode *current = malloc(NODE_SIZE);
+    Node *head = malloc(NODE_SIZE);
+    Node *current = malloc(NODE_SIZE);
     int data, position;
 
     // the first node of the linked list

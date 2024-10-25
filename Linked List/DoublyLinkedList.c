@@ -14,13 +14,13 @@ typedef struct DoublyNode
     struct DoublyNode *prev_addr;
     int data;
     struct DoublyNode *next_addr;
-} DoublyNode;
+} Node;
 
-DoublyNode *HEAD = NULL, *TAIL = NULL; //  POINTERS THAT POINTS THE HEAD AND TAIL OF LINKED LIST.
+Node *HEAD = NULL, *TAIL = NULL; //  POINTERS THAT POINTS THE HEAD AND TAIL OF LINKED LIST.
 
-const int NODESIZE = sizeof(DoublyNode); //  MESURES THE SIZE OF A NODE TO MAKE DYNAMIC MEMORY ALLOCATION
+const int NODESIZE = sizeof(Node); //  MESURES THE SIZE OF A NODE TO MAKE DYNAMIC MEMORY ALLOCATION
 
-int countNodes(DoublyNode *node)
+int countNodes(Node *node)
 {
     int count = 0;
     while (node != NULL)
@@ -31,7 +31,7 @@ int countNodes(DoublyNode *node)
     return count;
 }
 
-void displayDoubly(DoublyNode *node) //  DISPLAYS A DOUBLE LINKED LIST NODE FROM THE GIVEN NODE ADDRESS, usually address in head.
+void displayDoubly(Node *node) //  DISPLAYS A DOUBLE LINKED LIST NODE FROM THE GIVEN NODE ADDRESS, usually address in head.
 {
     if (node == NULL)
         printf("Linked List is empty");
@@ -48,9 +48,9 @@ void displayDoubly(DoublyNode *node) //  DISPLAYS A DOUBLE LINKED LIST NODE FROM
     }
 }
 
-DoublyNode *createNode(int value) //  FUNCTION TO CREATE A LINKED LIST WITH A NODE
+Node *createNode(int value) //  FUNCTION TO CREATE A LINKED LIST WITH A NODE
 {
-    DoublyNode *temp = malloc(NODESIZE);
+    Node *temp = malloc(NODESIZE);
     temp->data = value;
     temp->prev_addr = NULL;
     temp->next_addr = NULL;
@@ -62,9 +62,9 @@ DoublyNode *createNode(int value) //  FUNCTION TO CREATE A LINKED LIST WITH A NO
     */
 }
 
-DoublyNode *insertNodeAtFront(DoublyNode *front_node, int data)
+Node *insertNodeAtFront(Node *front_node, int data)
 {
-    DoublyNode *temp = createNode(data);
+    Node *temp = createNode(data);
     temp->next_addr = front_node;
     front_node->prev_addr = temp;
     return temp;
@@ -73,20 +73,20 @@ DoublyNode *insertNodeAtFront(DoublyNode *front_node, int data)
     */
 }
 
-DoublyNode *insertNodeAtEnd(DoublyNode *end_node, int data)
+Node *insertNodeAtEnd(Node *end_node, int data)
 {
-    DoublyNode *temp = createNode(data);
+    Node *temp = createNode(data);
     end_node->next_addr = temp;
     temp->prev_addr = end_node;
     return temp;
 }
 
-void insertNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int position, int data)
+void insertNodeAtPos(Node **head_addr, Node **tail_addr, int position, int data)
 //  THIS TAKES ADDR IN HEAD AS FRONT NODE, USER INPUT POSITON AND DATA
 {
-    DoublyNode *temp = createNode(data);
+    Node *temp = createNode(data);
     temp->data = data;
-    DoublyNode *node_bef_position = *head_addr;
+    Node *node_bef_position = *head_addr;
     if (position > countNodes(*head_addr) + 1 || position <= 0)
         printf("invalid position");
     else if (position == 1)
@@ -115,7 +115,7 @@ void insertNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int positio
     }
 }
 
-DoublyNode *deleteNodeAtFront(DoublyNode *front_node)
+Node *deleteNodeAtFront(Node *front_node)
 {
     front_node = front_node->next_addr;
     free(front_node->prev_addr);
@@ -123,7 +123,7 @@ DoublyNode *deleteNodeAtFront(DoublyNode *front_node)
     return front_node;
 }
 
-DoublyNode *deleteNodeAtEnd(DoublyNode *end_node)
+Node *deleteNodeAtEnd(Node *end_node)
 {
     end_node = end_node->prev_addr;
     free(end_node->next_addr);
@@ -131,7 +131,7 @@ DoublyNode *deleteNodeAtEnd(DoublyNode *end_node)
     return end_node;
 }
 
-void deleteNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int position)
+void deleteNodeAtPos(Node **head_addr, Node **tail_addr, int position)
 {
     // Check if the list is empty
     if (*head_addr == NULL)
@@ -141,8 +141,8 @@ void deleteNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int positio
     }
 
     // Get the head node
-    DoublyNode *node_bef_position = *head_addr;
-    DoublyNode *temp;
+    Node *node_bef_position = *head_addr;
+    Node *temp;
 
     // Check for invalid position
     if (position <= 0 || position > countNodes(*head_addr))
@@ -182,9 +182,9 @@ void deleteNodeAtPos(DoublyNode **head_addr, DoublyNode **tail_addr, int positio
     free(temp);
 }
 
-DoublyNode *reverseList(DoublyNode *front_node)
+Node *reverseList(Node *front_node)
 {
-    DoublyNode *temp = front_node->next_addr, *ptr = front_node;
+    Node *temp = front_node->next_addr, *ptr = front_node;
 
     while (temp != NULL)
     {

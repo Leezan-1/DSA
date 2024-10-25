@@ -6,13 +6,13 @@ using namespace std;
 class SinglyLinkedlist
 {
 private:
-    typedef struct Node
+    typedef struct SinglyNode
     {
         int data;
-        Node *next_addr;
-    } SinglyNode;
+        struct SinglyNode *next_addr;
+    } Node;
 
-    SinglyNode *head, *tail;
+    Node *head, *tail;
 
 public:
     SinglyLinkedlist()
@@ -22,11 +22,11 @@ public:
         cout << "Linked List Created\n";
     }
 
-    SinglyNode *createNode(int data)
+    Node *createNode(int data)
     {
         // cout << "\nEnter the data for node:\t";
         // cin >> data;
-        SinglyNode *new_node = new SinglyNode;
+        Node *new_node = new Node;
         new_node->data = data;
         new_node->next_addr = nullptr;
         return new_node;
@@ -37,7 +37,7 @@ public:
         if (this->checkEmpty())
             return;
 
-        SinglyNode *temp_node = this->head;
+        Node *temp_node = this->head;
 
         printf("Head: |%p|\n", temp_node);
 
@@ -65,7 +65,7 @@ public:
 
     void insertNodeAtFront()
     {
-        SinglyNode *temp = createNode(0);
+        Node *temp = createNode(0);
         temp->next_addr = this->head;
         this->head = temp;
     }
@@ -75,7 +75,7 @@ public:
         if (checkEmpty())
             return;
 
-        SinglyNode *temp = createNode(20);
+        Node *temp = createNode(20);
         this->tail->next_addr = temp;
         this->tail = temp;
 
@@ -96,7 +96,7 @@ public:
         if (this->checkEmpty())
             return;
 
-        SinglyNode *temp = this->head;
+        Node *temp = this->head;
         this->head = this->head->next_addr;
         delete (temp);
     }
@@ -105,7 +105,7 @@ public:
     {
         if (this->checkEmpty())
             return;
-        SinglyNode *temp = this->head;
+        Node *temp = this->head;
         if (temp->next_addr == nullptr)
         {
             delete (this->head);
