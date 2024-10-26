@@ -48,7 +48,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
              << "0. Exit\n"
              << "Enter your choice: ";
         cin >> choice;
-
+        cout<<endl;
         switch (choice)
         {
 
@@ -168,5 +168,6 @@ int main()
         cout << "Exiting program." << endl;
     }
 
+    
     return 0;
 }

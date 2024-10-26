@@ -39,21 +39,6 @@ private:
         */
     }
 
-public:
-    CircularSinglyLinkedList()
-    {
-        tail = createNode();
-        tail->next_addr = tail;
-        cout << "Circular Singly Linked List Created!" << endl;
-
-        /*
-            The intilizing of linked list consist of creating node
-            and adding it to tail pointer.
-            Circular Linked list, end node points to the first node.
-            So tail's next_addr also points to itself.
-        */
-    }
-
     int countNodes()
     {
         int count = 0;
@@ -88,6 +73,38 @@ public:
             return false;
         /*
             Fucntion checks if the tail pointer is null to validate empty
+        */
+    }
+
+    bool checkInvalidPosition(int position)
+    {
+        int no_of_nodes = countNodes();
+
+        if (position > no_of_nodes || position <= 0)
+        {
+            cout << "Invalid Position!" << endl;
+            return true;
+        }
+        else
+            return false;
+
+        /*
+            if position is greater than or 0 or less than 0, position is invalid.
+        */
+    }
+
+public:
+    CircularSinglyLinkedList()
+    {
+        tail = createNode();
+        tail->next_addr = tail;
+        cout << "Circular Singly Linked List Created!" << endl;
+
+        /*
+            The intilizing of linked list consist of creating node
+            and adding it to tail pointer.
+            Circular Linked list, end node points to the first node.
+            So tail's next_addr also points to itself.
         */
     }
 
@@ -299,23 +316,6 @@ public:
                 and if the node we want delete is tail node
                  then tail node will be the prev_temp after we delete the temp.
 
-        */
-    }
-
-    bool checkInvalidPosition(int position)
-    {
-        int no_of_nodes = countNodes();
-
-        if (position > no_of_nodes || position <= 0)
-        {
-            cout << "Invalid Position!" << endl;
-            return true;
-        }
-        else
-            return false;
-
-        /*
-            if position is greater than or 0 or less than 0, position is invalid.
         */
     }
 
