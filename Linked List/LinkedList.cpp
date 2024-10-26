@@ -44,11 +44,12 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
              << "5. Delete Node at Front\n"
              << "6. Delete Node at End\n"
              << "7. Delete Node at Position\n"
-             << "8. Reverse List\n"
+             << "8. Delete Entire List\n"
+             << "9. Reverse List\n"
              << "0. Exit\n"
              << "Enter your choice: ";
         cin >> choice;
-        cout<<endl;
+        cout << endl;
         switch (choice)
         {
 
@@ -118,8 +119,20 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 8:
         {
-            list.reverseList();
-            cout << "List reversed!" << endl;
+            if (list.deleteEntireList())
+                cout << "Entire linkedlist deleted!" << endl;
+            else
+                cout << "Entire linkedlist could not be deleted!" << endl;
+            break;
+        }
+
+        case 9:
+        {
+            if (list.reverseList())
+                cout << "List reversed!" << endl;
+
+            else
+                cout << "List couldnot be reversed!" << endl;
             break;
         }
 
@@ -135,6 +148,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
             break;
         }
         }
+        cout <<choice;
     } while (choice != 0);
 }
 
@@ -168,6 +182,6 @@ int main()
         cout << "Exiting program." << endl;
     }
 
-    
+    cout<<34;
     return 0;
 }

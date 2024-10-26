@@ -94,6 +94,11 @@ private:
     }
 
 public:
+    ~CircularSinglyLinkedList()
+    {
+        deleteEntireList();
+    }
+
     CircularSinglyLinkedList()
     {
         tail = createNode();
@@ -347,5 +352,16 @@ public:
             The loop stoops at next_node = tail (i.e when head points to previous last node).
             The time complexity of the function is 0(n)
         */
+    }
+
+    bool deleteEntireList()
+    {
+        if (checkEmpty())
+            return false;
+        
+        while (tail != nullptr)
+            deleteNodeAtFront();
+        
+        return true;
     }
 };
