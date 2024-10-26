@@ -26,7 +26,7 @@ int chooseLinkedList()
 
     } while (choice < 0 || choice > 4);
 
-    return choice;
+    return choice=3;
 }
 
 void linkedListFunctionMenu(CircularSinglyLinkedList &list)
@@ -148,7 +148,6 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
             break;
         }
         }
-        cout <<choice;
     } while (choice != 0);
 }
 
@@ -182,6 +181,5 @@ int main()
         cout << "Exiting program." << endl;
     }
 
-    cout<<34;
     return 0;
 }
