@@ -16,6 +16,7 @@ Calloc
 Realloc
 Malloc
 Free
+LinkedList
 SinglyLinkedList
 DoublyLinkedList
 CircularSinglyLinkedList

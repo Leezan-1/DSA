@@ -21,14 +21,13 @@ private:
         */
     } Node;
 
-    int value[6];
-
     Node *tail;
 
-    Node *createNode(int data)
+    Node *createNode()
     {
-        // cout << "\nEnter the data for node:\t";
-        // cin >> data;
+        int data;
+        cout << "\nEnter the data for node: ";
+        cin >> data;
         Node *new_node = new Node;
         new_node->data = data;
         new_node->next_addr = nullptr;
@@ -43,10 +42,7 @@ private:
 public:
     CircularSinglyLinkedList()
     {
-        for (size_t i = 0; i < (sizeof(value) / sizeof(value[0])); i++)
-            value[i] = i * 10;
-
-        tail = createNode(value[1]);
+        tail = createNode();
         tail->next_addr = tail;
         cout << "Circular Singly Linked List Created!" << endl;
 
@@ -84,7 +80,8 @@ public:
     {
         if (tail == nullptr)
         {
-            cout << "Linked List empty!" << endl;
+            cout << endl
+                 << "Linked List empty!" << endl;
             return true;
         }
         else
@@ -100,15 +97,14 @@ public:
             return;
 
         Node *temp_node = tail->next_addr;
+        cout << endl
+             << "Number of Node(s): " << countNodes() << endl;
         do
         {
-            printf("| %d | %p |\t", temp_node->data, temp_node->next_addr);
+            printf("| %d |\t", temp_node->data);
             temp_node = temp_node->next_addr;
         } while (temp_node != tail->next_addr);
-
-        cout << endl
-             << "Tail: " << tail << " | Nodes: " << countNodes() << endl;
-        ;
+        cout << endl;
 
         /*
              This function prints the linked list;
@@ -123,16 +119,17 @@ public:
         */
     }
 
-    void insertNodeAtFront()
+    bool insertNodeAtFront()
     {
         if (checkEmpty())
-            return;
+            return false;
 
-        Node *new_node = createNode(value[0]);
+        Node *new_node = createNode();
         // new_node->next_addr = tail->next_addr;
         new_node->next_addr = tail->next_addr;
         tail->next_addr = new_node;
 
+        return true;
         /*
             The function adds node at the beginning of linked list.
             The new _node's next_addr stores the address of the first node i.e tail's next_addr.
@@ -140,10 +137,10 @@ public:
         */
     }
 
-    void deleteNodeAtFront()
+    bool deleteNodeAtFront()
     {
         if (checkEmpty())
-            return;
+            return false;
 
         Node *temp = tail->next_addr;
 
@@ -154,7 +151,7 @@ public:
 
         delete temp;
         temp = nullptr;
-
+        return true;
         /*
             The function helps to delete the front node.
             The pointer temp stores the addr of the front node i.e tail's next_addr.
@@ -167,17 +164,17 @@ public:
         */
     }
 
-    void insertNodeAtEnd()
+    bool insertNodeAtEnd()
     {
-        Node *new_node = createNode(value[4]);
 
         if (checkEmpty())
-            return;
+            return false;
 
+        Node *new_node = createNode();
         new_node->next_addr = tail->next_addr;
         tail->next_addr = new_node;
         tail = new_node;
-
+        return true;
         /*
             This function adds node at end.
             the new_node's next_addr is kept as tail node's next_addr
@@ -186,10 +183,10 @@ public:
         */
     }
 
-    void deleteNodeAtEnd()
+    bool deleteNodeAtEnd()
     {
         if (checkEmpty())
-            return;
+            return false;
 
         Node *temp = tail->next_addr;
         while (temp->next_addr != tail)
@@ -198,7 +195,7 @@ public:
         temp->next_addr = tail->next_addr;
         delete tail;
         tail = (tail != temp) ? temp : nullptr;
-
+        return true;
         /*
             function deletes node at end.
             first the temp stores the add of head node
@@ -210,15 +207,15 @@ public:
         */
     }
 
-    void insertNodeAtPosition(int position)
+    bool insertNodeAtPosition(int position)
     {
 
         if (checkEmpty())
-            return;
+            return false;
         else if (checkInvalidPosition(position))
-            return;
+            return false;
 
-        Node *new_node = createNode(value[2]);
+        Node *new_node = createNode();
 
         if (position == 1)
         {
@@ -237,6 +234,7 @@ public:
             temp->next_addr = new_node;
         }
 
+        return true;
         /*
             if position is 1,
                 then, new_node's next addr is front node and tail's next_addr points to new_node
@@ -250,17 +248,17 @@ public:
 
                 at last we update the next_addr of the node previous to the position, pointing to new_node.
 
-                temp -> new_node -> next 
+                temp -> new_node -> next
 
         */
     }
 
-    void deleteNodeAtPosition(int position)
+    bool deleteNodeAtPosition(int position)
     {
         if (checkEmpty())
-            return;
+            return false;
         else if (checkInvalidPosition(position))
-            return;
+            return false;
 
         Node *temp;
         if (position == 1)
@@ -286,7 +284,7 @@ public:
         }
         delete temp;
         temp = nullptr;
-
+        return true;
         /*
             here temp is the node that will be deleted.
 
@@ -321,10 +319,10 @@ public:
         */
     }
 
-    void reverseList()
+    bool reverseList()
     {
         if (checkEmpty())
-            return;
+            return false;
         Node *head = tail->next_addr, *prev_node, *next_node;
         tail = head;
         prev_node = head;
@@ -338,7 +336,7 @@ public:
             prev_node = head;
         }
         tail->next_addr = head;
-
+        return true;
         /*
             The function reverses the linked list.
             It uses 3 varaibles: head , prev_node and next_node.
@@ -351,25 +349,3 @@ public:
         */
     }
 };
-
-int main()
-{
-    CircularSinglyLinkedList linkedlist = CircularSinglyLinkedList();
-
-    linkedlist.insertNodeAtFront();
-    linkedlist.insertNodeAtEnd();
-    linkedlist.insertNodeAtEnd();
-    linkedlist.insertNodeAtPosition(3);
-    linkedlist.displayNodes();
-
-    cout << endl;
-    linkedlist.deleteNodeAtFront();
-    linkedlist.deleteNodeAtEnd();
-    linkedlist.deleteNodeAtPosition(3);
-    linkedlist.displayNodes();
-
-    cout << endl;
-    linkedlist.reverseList();
-    linkedlist.displayNodes();
-    return 0;
-}
