@@ -42,7 +42,7 @@ private:
     }
 
 public:
-    CircularSinglyLinkedList(/* args */)
+    CircularSinglyLinkedList()
     {
         for (size_t i = 0; i < (sizeof(value) / sizeof(value[0])); i++)
             value[i] = i * 10;
@@ -149,6 +149,9 @@ public:
     {
         Node *new_node = createNode(value[4]);
 
+        if (checkEmpty())
+            return;
+
         new_node->next_addr = tail->next_addr;
         tail->next_addr = new_node;
         tail = new_node;
@@ -161,13 +164,39 @@ public:
         */
     }
 
+    void deleteNodeAtEnd()
+    {
+        if (checkEmpty())
+            return;
+
+        Node *temp = tail->next_addr;
+        while (temp->next_addr != tail)
+            temp = temp->next_addr;
+
+        temp->next_addr = tail->next_addr;
+        delete tail;
+        tail = (tail != temp) ? temp : nullptr;
+
+        /*
+            function deletes node at end.
+            first the temp stores the add of head node
+            the loop runs until the temp is second last node.
+            the second last node's next_addr points to the first node.
+            the last node is freed
+
+            the last exp checks if thereis only one node, then tail should point to null.
+        */
+    }
+
     void reverseList()
     {
+        if (checkEmpty())
+            return;
         Node *head = tail->next_addr, *prev_node, *next_node;
         tail = head;
         prev_node = head;
         next_node = head->next_addr;
-        
+
         while (next_node != tail)
         {
             head = next_node;
@@ -195,12 +224,12 @@ int main()
     CircularSinglyLinkedList linkedlist = CircularSinglyLinkedList();
 
     linkedlist.insertNodeAtFront();
-    linkedlist.insertNodeAtFront();
     linkedlist.insertNodeAtEnd();
     linkedlist.displayNodes();
 
     cout << endl;
-    linkedlist.deleteNodeAtFront(); 
+    linkedlist.deleteNodeAtFront();
+    linkedlist.deleteNodeAtEnd();
     linkedlist.displayNodes();
 
     cout << endl;
