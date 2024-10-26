@@ -32,7 +32,6 @@ private:
         Node *new_node = new Node;
         new_node->data = data;
         new_node->next_addr = nullptr;
-        // cout<<"Node created"<<endl;
         return new_node;
 
         /*
@@ -59,6 +58,28 @@ public:
         */
     }
 
+    int countNodes()
+    {
+        int count = 0;
+        Node *temp = tail->next_addr;
+        do
+        {
+            count++;
+            temp = temp->next_addr;
+        } while (temp != tail->next_addr);
+        return count;
+
+        /*
+            the loop is changed compared to singly list as there is no null at
+            last node;
+            The loop runs as temp_node being the first node (tail's next_addr).
+            do...while is used here because we check the tail's next_addr(i.e front node) to end the loop.
+            and we start loop as the front node which will take us out of loop before even starting (if we use whiile loop).
+
+            The time complecity to print is O(n) as each node is travesed.
+        */
+    }
+
     bool checkEmpty()
     {
         if (tail == nullptr)
@@ -73,7 +94,7 @@ public:
         */
     }
 
-    void displayNodes() // This function prints the linked list;
+    void displayNodes()
     {
         if (checkEmpty())
             return;
@@ -86,10 +107,11 @@ public:
         } while (temp_node != tail->next_addr);
 
         cout << endl
-             << "Tail: |" << tail << "|" << endl;
+             << "Tail: " << tail << " | Nodes: " << countNodes() << endl;
         ;
 
         /*
+             This function prints the linked list;
             the loop is changed compared to singly list as there is no null at
             last node;
             The loop runs as temp_node being the first node (tail's next_addr).
@@ -188,6 +210,117 @@ public:
         */
     }
 
+    void insertNodeAtPosition(int position)
+    {
+
+        if (checkEmpty())
+            return;
+        else if (checkInvalidPosition(position))
+            return;
+
+        Node *new_node = createNode(value[2]);
+
+        if (position == 1)
+        {
+            new_node->next_addr = tail->next_addr;
+            tail->next_addr = new_node;
+        }
+        else
+        {
+            Node *temp = tail->next_addr;
+            for (size_t i = 1; i < position - 1; i++)
+                temp = temp->next_addr;
+
+            new_node->next_addr = temp->next_addr;
+            tail = (temp == tail) ? new_node : tail;
+
+            temp->next_addr = new_node;
+        }
+
+        /*
+            if position is 1,
+                then, new_node's next addr is front node and tail's next_addr points to new_node
+            else
+                we need a temp pointer pointing to previous node of the node at the postion
+                the loop continues until we reach the previous node of the given position.
+                there we update the new_node's next_addr to point to the node at that position.
+
+                then we check if we are inserting a end node, ie temp is tail.
+                if true, the new_node is tail.
+
+                at last we update the next_addr of the node previous to the position, pointing to new_node.
+
+                temp -> new_node -> next 
+
+        */
+    }
+
+    void deleteNodeAtPosition(int position)
+    {
+        if (checkEmpty())
+            return;
+        else if (checkInvalidPosition(position))
+            return;
+
+        Node *temp;
+        if (position == 1)
+        {
+            temp = tail->next_addr;
+            if (tail == temp)
+                tail = nullptr;
+            else
+                tail->next_addr = temp->next_addr;
+        }
+
+        else
+        {
+            Node *prev_temp = tail->next_addr;
+            for (size_t i = 1; i < position - 1; i++)
+                prev_temp = prev_temp->next_addr;
+
+            temp = prev_temp->next_addr;
+            prev_temp->next_addr = temp->next_addr;
+
+            if (tail == temp)
+                tail = prev_temp;
+        }
+        delete temp;
+        temp = nullptr;
+
+        /*
+            here temp is the node that will be deleted.
+
+            if position is 1 then,
+                if there is only one node in linked list,
+                    yes then, delete temp and point tail to null
+                    no then delete the first node and point tail to second node
+            else
+                then we need prev_temp;
+                prev_temp is the node previos to temp;
+                the next_addr of prev_temp is will be temp's next addr
+                and if the node we want delete is tail node
+                 then tail node will be the prev_temp after we delete the temp.
+
+        */
+    }
+
+    bool checkInvalidPosition(int position)
+    {
+        int no_of_nodes = countNodes();
+
+        if (position > no_of_nodes || position <= 0)
+        {
+            cout << "Invalid Position!" << endl;
+            return true;
+        }
+        else
+            return false;
+
+        /*
+            if position is greater than or 0 or less than 0, position is invalid.
+        */
+    }
+
     void reverseList()
     {
         if (checkEmpty())
@@ -225,11 +358,14 @@ int main()
 
     linkedlist.insertNodeAtFront();
     linkedlist.insertNodeAtEnd();
+    linkedlist.insertNodeAtEnd();
+    linkedlist.insertNodeAtPosition(3);
     linkedlist.displayNodes();
 
     cout << endl;
     linkedlist.deleteNodeAtFront();
     linkedlist.deleteNodeAtEnd();
+    linkedlist.deleteNodeAtPosition(3);
     linkedlist.displayNodes();
 
     cout << endl;
