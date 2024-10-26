@@ -47,8 +47,8 @@ public:
         for (size_t i = 0; i < (sizeof(value) / sizeof(value[0])); i++)
             value[i] = i * 10;
 
-        (this->tail) = createNode(value[1]);
-        (this->tail)->next_addr = (this->tail);
+        tail = createNode(value[1]);
+        tail->next_addr = tail;
         cout << "Circular Singly Linked List Created!" << endl;
 
         /*
@@ -61,7 +61,7 @@ public:
 
     bool checkEmpty()
     {
-        if ((this->tail) == nullptr)
+        if (tail == nullptr)
         {
             cout << "Linked List empty!" << endl;
             return true;
@@ -77,16 +77,16 @@ public:
     {
         if (checkEmpty())
             return;
-        
-        Node *temp_node = (this->tail)->next_addr;
+
+        Node *temp_node = tail->next_addr;
         do
         {
             printf("| %d | %p |\t", temp_node->data, temp_node->next_addr);
             temp_node = temp_node->next_addr;
-        } while (temp_node != (this->tail)->next_addr);
-        
+        } while (temp_node != tail->next_addr);
+
         cout << endl
-             << "Tail: |" << (this->tail) << "|" << endl;
+             << "Tail: |" << tail << "|" << endl;
         ;
 
         /*
@@ -95,7 +95,7 @@ public:
             The loop runs as temp_node being the first node (tail's next_addr).
             do...while is used here because we check the tail's next_addr(i.e front node) to end the loop.
             and we start loop as the front node which will take us out of loop before even starting (if we use whiile loop).
-            
+
 
             The time complecity to print is O(n) as each node is travesed.
         */
@@ -108,8 +108,8 @@ public:
 
         Node *new_node = createNode(value[0]);
         // new_node->next_addr = tail->next_addr;
-        new_node->next_addr = (this->tail)->next_addr;
-        (this->tail)->next_addr = new_node;
+        new_node->next_addr = tail->next_addr;
+        tail->next_addr = new_node;
 
         /*
             The function adds node at the beginning of linked list.
@@ -138,7 +138,7 @@ public:
             The pointer temp stores the addr of the front node i.e tail's next_addr.
             if: there is only one node i.e temp and tail are equal
                 then tail should point to null and we free temp;
-            else: 
+            else:
                 we store second node's addrss as the new frist node.
                 and we free temp;
 
@@ -149,7 +149,7 @@ public:
     {
         Node *new_node = createNode(value[4]);
 
-        new_node->next_addr = (this->tail)->next_addr;
+        new_node->next_addr = tail->next_addr;
         tail->next_addr = new_node;
         tail = new_node;
 
@@ -160,6 +160,34 @@ public:
             the tail is now the new node.
         */
     }
+
+    void reverseList()
+    {
+        Node *head = tail->next_addr, *prev_node, *next_node;
+        tail = head;
+        prev_node = head;
+        next_node = head->next_addr;
+        
+        while (next_node != tail)
+        {
+            head = next_node;
+            next_node = next_node->next_addr;
+            head->next_addr = prev_node;
+            prev_node = head;
+        }
+        tail->next_addr = head;
+
+        /*
+            The function reverses the linked list.
+            It uses 3 varaibles: head , prev_node and next_node.
+            next_node stores the addr of the next node.
+            head stores the addr of the node whose next_addr is being changed.
+            prev_node stores the addr of the previous node
+            The loop starts as tail pointing to the first node which will be last node.
+            The loop stoops at next_node = tail (i.e when head points to previous last node).
+            The time complexity of the function is 0(n)
+        */
+    }
 };
 
 int main()
@@ -167,12 +195,16 @@ int main()
     CircularSinglyLinkedList linkedlist = CircularSinglyLinkedList();
 
     linkedlist.insertNodeAtFront();
+    linkedlist.insertNodeAtFront();
     linkedlist.insertNodeAtEnd();
     linkedlist.displayNodes();
 
     cout << endl;
-    linkedlist.deleteNodeAtFront();
-    linkedlist.deleteNodeAtFront();
+    linkedlist.deleteNodeAtFront(); 
+    linkedlist.displayNodes();
+
+    cout << endl;
+    linkedlist.reverseList();
     linkedlist.displayNodes();
     return 0;
 }
