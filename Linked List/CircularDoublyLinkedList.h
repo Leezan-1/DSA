@@ -47,7 +47,7 @@ private:
     {
         if (tail == nullptr)
         {
-            cout << "Linked list empty!"<<endl;
+            cout << "Linked list empty!" << endl;
             return true;
         }
         else
@@ -190,7 +190,7 @@ public:
 
         delete temp;
         return true;
-        
+
         /*
             first node's addr is stored in temp.
 
@@ -203,5 +203,41 @@ public:
 
 
         */
+    }
+
+    bool deleteNodeAtEnd()
+    {
+        if (checkEmpty())
+            return false;
+
+        Node *temp = tail;
+        
+        if (tail != tail->next_addr)
+        {
+            tail->next_addr->prev_addr = tail->prev_addr;
+            tail->prev_addr->next_addr = tail->next_addr;
+        }
+        else
+            tail = nullptr;
+        
+        delete temp;
+        return true;
+    }
+
+    bool insertNodeAtEnd()
+    {
+        if(checkEmpty())
+            return false;
+        
+        Node *new_node = createNode(array[2]);
+        new_node->next_addr = tail->next_addr;
+        new_node->prev_addr = tail;
+
+        tail->next_addr->prev_addr = new_node;
+        tail->next_addr = new_node;
+
+        tail = new_node;
+        
+        return true;
     }
 };
