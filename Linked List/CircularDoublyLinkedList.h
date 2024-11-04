@@ -47,7 +47,7 @@ private:
     {
         if (tail == nullptr)
         {
-            cout << "Linked list empty!";
+            cout << "Linked list empty!"<<endl;
             return true;
         }
         else
@@ -73,6 +73,21 @@ private:
             and we start loop as the front node which will take us out of loop before even starting (if we use whiile loop).
 
             The time complecity to print is O(n) as each node is travesed.
+        */
+    }
+
+    bool checkInvalidPosition(int position)
+    {
+        if (position > countNodes() || position <= 0)
+        {
+            cout << "Invalid Position!" << endl;
+            return true;
+        }
+        else
+            return false;
+
+        /*
+            if position is greater than or 0 or less than 0, position is invalid.
         */
     }
 
@@ -138,11 +153,11 @@ public:
 
         if (tail == tail->next_addr)
             tail->prev_addr = temp;
-        return true; 
-        
+        return true;
+
         /*
             first a new node is created and its addr is pointed by temp
-            
+
             the new node's prev_addr will point to the tail and next_addr
             will point to existing first node.
 
@@ -154,6 +169,39 @@ public:
 
 
             ten first
+        */
+    }
+
+    bool deleteNodeAtFront()
+    {
+        if (checkEmpty())
+            return false;
+
+        Node *temp = tail->next_addr;
+
+        if (tail != tail->next_addr)
+        {
+            tail->next_addr = temp->next_addr;
+
+            temp->next_addr->prev_addr = tail;
+        }
+        else
+            tail = nullptr;
+
+        delete temp;
+        return true;
+        
+        /*
+            first node's addr is stored in temp.
+
+            tail's next_addr stores the addr of 2nd node.(which will be 1st node)
+
+            2nd node's prev_addr will store tail's addr. now temp can be freed
+            so temp is deleted.
+
+            if there is only one node then tail point to null;
+
+
         */
     }
 };
