@@ -294,10 +294,42 @@ public:
 
             if (tail == temp)
                 tail = prev_temp;
-            
 
             delete temp;
             return true;
         }
+    }
+
+    bool deleteEntireList()
+    {
+        if (checkEmpty())
+            return false;
+
+        while (tail != nullptr)
+            deleteNodeAtFront();
+
+        return true;
+    }
+
+
+    bool reverseList()
+    {
+        // Reverses the circular doubly linked list.
+        if (checkEmpty())
+            return false;
+
+        Node *current = tail->next_addr; // Starts from the head
+        Node *temp = nullptr;            // Temporary pointer for swapping
+
+        do
+        {
+            temp = current->prev_addr; // Swaps prev and next of current
+            current->prev_addr = current->next_addr;
+            current->next_addr = temp;
+            current = current->prev_addr; // Moves to the next node in original order
+        } while (current != tail->next_addr); // Loops until back at head
+
+        tail = tail->next_addr; // Updates tail to the previous head
+        return true;
     }
 };
