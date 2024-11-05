@@ -8,32 +8,28 @@
 class CircularDoubly
 {
 private:
-    typedef struct CircularDoublyNode
+    typedef struct Node
     {
-        struct CircularDoublyNode *prev_addr;
+        struct Node *prev_addr;
         int data;
-        struct CircularDoublyNode *next_addr;
+        struct Node *next_addr;
         /*
             This creates a node for singly circular linked list.
             The singly circular linked list contains data and address of next node.
             And the end node points to the starting node.
         */
+
+       Node(int value) : prev_addr(nullptr), next_addr(nullptr), data(value) {};
     } Node;
 
     Node *tail;
-    int array[6];
 
-    Node *createNode(int value)
+    Node *createNode()
     {
         int data;
-        // cout << "\nEnter the data for node: ";
-        // cin >> data;
-        data = value;
-        Node *new_node = new Node;
-
-        new_node->data = data;
-        new_node->next_addr = nullptr;
-        new_node->prev_addr = nullptr;
+        cout << "\nEnter the data for node: ";
+        cin >> data;
+        Node *new_node = new Node(data);
 
         return new_node;
 
@@ -72,11 +68,8 @@ private:
 public:
     CircularDoubly()
     {
-        for (size_t i = 0; i < 6; i++)
-        {
-            array[i] = i * 10;
-        }
-        tail = createNode(array[1]);
+        
+        tail = createNode();
         tail->next_addr = tail;
         tail->prev_addr = tail;
         cout << "Circular Doubly Linked List Created!" << endl;
@@ -144,7 +137,7 @@ public:
         if (checkEmpty())
             return false;
 
-        Node *temp = createNode(array[0]);
+        Node *temp = createNode();
         temp->prev_addr = tail;
         temp->next_addr = tail->next_addr;
 
@@ -229,7 +222,7 @@ public:
         if (checkEmpty())
             return false;
 
-        Node *new_node = createNode(array[2]);
+        Node *new_node = createNode();
         new_node->next_addr = tail->next_addr;
         new_node->prev_addr = tail;
 
@@ -252,7 +245,7 @@ public:
             return insertNodeAtFront();
         else
         {
-            Node *temp = tail->next_addr, *new_node = createNode(array[5]);
+            Node *temp = tail->next_addr, *new_node = createNode();
             for (size_t i = 1; i < position - 1; i++)
                 temp = temp->next_addr;
 

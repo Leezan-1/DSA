@@ -107,16 +107,20 @@ public:
             temp->next_addr = head;
             head = temp;
         }
+        return true;
     }
 
     bool deleteNodeAtFront()
     {
         if (checkEmpty())
-            return;
+            return false;
 
         Node *temp = this->head;
         this->head = this->head->next_addr;
+        
         delete (temp);
+        temp = nullptr;
+        return true;
     }
 
     bool insertNodeAtEnd() // This function inserts node with a value at the end of linked list
@@ -169,7 +173,7 @@ public:
     {
         if (checkEmpty())
             return false;
-        else if (checkEmpty)
+        else if (checkInvalidPosition(position))
             return false;
 
         if (position == 1)
@@ -217,5 +221,6 @@ public:
             delete temp;
             temp = nullptr;
         }
+        return true;
     }
 };
