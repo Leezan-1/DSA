@@ -16,12 +16,12 @@ private:
 
     Node *head, *tail;
 
-    int checkEmpty()
+    bool checkEmpty()
     {
         if (head == nullptr && tail == nullptr)
         {
             cout << "\nlinked list is empty!\n";
-            return 1;
+            return true;
         }
         else
             return 0;
