@@ -54,31 +54,9 @@ private:
             return false;
     }
 
-    int countNodes()
-    {
-        int count = 0;
-        Node *temp = tail->next_addr;
-        do
-        {
-            count++;
-            temp = temp->next_addr;
-        } while (temp != tail->next_addr);
-        return count;
-
-        /*
-            the loop is changed compared to singly list as there is no null at
-            last node;
-            The loop runs as temp_node being the first node (tail's next_addr).
-            do...while is used here because we check the tail's next_addr(i.e front node) to end the loop.
-            and we start loop as the front node which will take us out of loop before even starting (if we use whiile loop).
-
-            The time complecity to print is O(n) as each node is travesed.
-        */
-    }
-
     bool checkInvalidPosition(int position)
     {
-        if (position > countNodes() || position <= 0)
+        if (position > countNodes() + 1 || position <= 0)
         {
             cout << "Invalid Position!" << endl;
             return true;
@@ -108,6 +86,28 @@ public:
             and adding it to tail pointer.
             Circular Linked list, end node points to the first node.
             So tail's next_addr also points to itself.
+        */
+    }
+
+    int countNodes()
+    {
+        int count = 0;
+        Node *temp = tail->next_addr;
+        do
+        {
+            count++;
+            temp = temp->next_addr;
+        } while (temp != tail->next_addr);
+        return count;
+
+        /*
+            the loop is changed compared to singly list as there is no null at
+            last node;
+            The loop runs as temp_node being the first node (tail's next_addr).
+            do...while is used here because we check the tail's next_addr(i.e front node) to end the loop.
+            and we start loop as the front node which will take us out of loop before even starting (if we use whiile loop).
+
+            The time complecity to print is O(n) as each node is travesed.
         */
     }
 
@@ -211,7 +211,7 @@ public:
             return false;
 
         Node *temp = tail;
-        
+
         if (tail != tail->next_addr)
         {
             tail->next_addr->prev_addr = tail->prev_addr;
@@ -219,16 +219,16 @@ public:
         }
         else
             tail = nullptr;
-        
+
         delete temp;
         return true;
     }
 
     bool insertNodeAtEnd()
     {
-        if(checkEmpty())
+        if (checkEmpty())
             return false;
-        
+
         Node *new_node = createNode(array[2]);
         new_node->next_addr = tail->next_addr;
         new_node->prev_addr = tail;
@@ -237,7 +237,67 @@ public:
         tail->next_addr = new_node;
 
         tail = new_node;
-        
+
         return true;
+    }
+
+    bool insertNodeAtPosition(int position)
+    {
+        if (checkEmpty())
+            return false;
+        else if (checkInvalidPosition(position))
+            return false;
+
+        if (position == 1)
+            return insertNodeAtFront();
+        else
+        {
+            Node *temp = tail->next_addr, *new_node = createNode(array[5]);
+            for (size_t i = 1; i < position - 1; i++)
+                temp = temp->next_addr;
+
+            new_node->next_addr = temp->next_addr;
+            new_node->prev_addr = temp;
+            temp->next_addr->prev_addr = new_node;
+            temp->next_addr = new_node;
+
+            tail = (temp == tail) ? new_node : tail;
+            return true;
+        }
+    }
+
+    bool deleteNodeAtPosition(int position)
+    {
+        if (checkEmpty())
+            return false;
+        else if (position == countNodes() + 1)
+        {
+            checkInvalidPosition(position + 1);
+            return false;
+        }
+        else if (checkInvalidPosition(position))
+            return false;
+
+        if (position == 1)
+            return deleteNodeAtFront();
+        else
+        {
+            Node *prev_temp = tail->next_addr, *temp;
+
+            for (size_t i = 1; i < position - 1; i++)
+                prev_temp = prev_temp->next_addr;
+
+            temp = prev_temp->next_addr;
+
+            prev_temp->next_addr = temp->next_addr;
+            temp->next_addr->prev_addr = prev_temp;
+
+            if (tail == temp)
+                tail = prev_temp;
+            
+
+            delete temp;
+            return true;
+        }
     }
 };
