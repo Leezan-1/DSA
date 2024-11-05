@@ -1,13 +1,11 @@
-#include <iostream>
 
-using namespace std;
 
 /* Circular linked list is the type of linked list in which last node points
     to the first node.
     Last node has address of first node;
 */
 
-class CircularSinglyLinkedList
+class CircularSingly
 {
 private:
     typedef struct CircularSinglyNode
@@ -94,12 +92,12 @@ private:
     }
 
 public:
-    ~CircularSinglyLinkedList()
+    ~CircularSingly()
     {
         deleteEntireList();
     }
 
-    CircularSinglyLinkedList()
+    CircularSingly()
     {
         tail = createNode();
         tail->next_addr = tail;

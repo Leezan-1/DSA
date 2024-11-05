@@ -2,8 +2,8 @@
 using namespace std;
 
 // Include all the headers for different linked list types
-// #include "SinglyLinkedList.h"
-// #include "DoublyLinkedList.h"
+#include "SinglyLinkedList.h"
+#include "DoublyLinkedList.h"
 #include "CircularSinglyLinkedList.h"
 #include "CircularDoublyLinkedList.h"
 
@@ -29,7 +29,9 @@ int chooseLinkedList()
     return choice=3;
 }
 
-void linkedListFunctionMenu(CircularSinglyLinkedList &list)
+template <typename T>
+void linkedListFunctionMenu(T &linkedlist)
+
 {
     int choice;
     int position;
@@ -55,13 +57,13 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 1:
         {
-            list.displayNodes();
+            linkedlist.displayNodes();
             break;
         }
 
         case 2:
         {
-            if (list.insertNodeAtFront())
+            if (linkedlist.insertNodeAtFront())
                 cout << "Node inserted at front!" << endl;
             else
                 cout << "Failed to insert node at front!" << endl;
@@ -70,7 +72,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 3:
         {
-            if (list.insertNodeAtEnd())
+            if (linkedlist.insertNodeAtEnd())
                 cout << "Node inserted at end!" << endl;
             else
                 cout << "Failed to insert node at end!" << endl;
@@ -81,7 +83,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
         {
             cout << "Enter position to insert: ";
             cin >> position;
-            if (list.insertNodeAtPosition(position))
+            if (linkedlist.insertNodeAtPosition(position))
                 cout << "Node inserted at position " << position << "!" << endl;
             else
                 cout << "Failed to insert node at position " << position << "!" << endl;
@@ -90,7 +92,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 5:
         {
-            if (list.deleteNodeAtFront())
+            if (linkedlist.deleteNodeAtFront())
                 cout << "Node deleted from front!" << endl;
             else
                 cout << "Failed to delete node from front!" << endl;
@@ -99,7 +101,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 6:
         {
-            if (list.deleteNodeAtEnd())
+            if (linkedlist.deleteNodeAtEnd())
                 cout << "Node deleted from end!" << endl;
             else
                 cout << "Failed to delete node from end!" << endl;
@@ -110,7 +112,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
         {
             cout << "Enter position to delete: ";
             cin >> position;
-            if (list.deleteNodeAtPosition(position))
+            if (linkedlist.deleteNodeAtPosition(position))
                 cout << "Node deleted from position " << position << "!" << endl;
             else
                 cout << "Failed to delete node from position " << position << "!" << endl;
@@ -119,7 +121,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 8:
         {
-            if (list.deleteEntireList())
+            if (linkedlist.deleteEntireList())
                 cout << "Entire linkedlist deleted!" << endl;
             else
                 cout << "Entire linkedlist could not be deleted!" << endl;
@@ -128,7 +130,7 @@ void linkedListFunctionMenu(CircularSinglyLinkedList &list)
 
         case 9:
         {
-            if (list.reverseList())
+            if (linkedlist.reverseList())
                 cout << "List reversed!" << endl;
 
             else
@@ -156,27 +158,27 @@ int main()
     int choice = chooseLinkedList();
     switch (choice)
     {
-    // case 1: {
-    //     SinglyLinkedList list;
-    //     linkedListFunctionMenu(list);
-    //     break;
-    // }
-    // case 2: {
-    //     DoublyLinkedList list;
-    //     linkedListFunctionMenu(list);
-    //     break;
-    // }
-    case 3:
-    {
-        CircularSinglyLinkedList list;
+    case 1: {
+        Singly list;
         linkedListFunctionMenu(list);
         break;
     }
-    // case 4: {
-    //     CircularDoublyLinkedList list;
-    //     linkedListFunctionMenu(list);
-    //     break;
-    // }
+    case 2: {
+        Doubly list;
+        linkedListFunctionMenu(list);
+        break;
+    }
+    case 3:
+    {
+        CircularSingly list;
+        linkedListFunctionMenu(list);
+        break;
+    }
+    case 4: {
+        CircularDoubly list;
+        linkedListFunctionMenu(list);
+        break;
+    }
     default:
         cout << "Exiting program." << endl;
     }
