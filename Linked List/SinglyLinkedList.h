@@ -1,174 +1,172 @@
-#include <iostream>
-#include <climits>
-
-using namespace std;
-
 class Singly
 {
 private:
+    // Node structure representing a single element in the linked list.
     struct Node
     {
         int data;
         struct Node *next_addr;
 
-        Node(int value) : next_addr(nullptr), data(value) {};
+        Node(int value) : data(value), next_addr(nullptr) {}
     };
 
     Node *head, *tail;
 
-    bool checkEmpty()
-    {
-        if (head == nullptr && tail == nullptr)
-        {
-            cout << "\nlinked list is empty!\n";
-            return true;
-        }
-        else
-            return 0;
-    }
-
     Node *createNode()
     {
         int data;
-        cout << "\nEnter the data for node: ";
+        cout << "Enter the data for node: ";
         cin >> data;
         Node *new_node = new Node(data);
         return new_node;
+
+        /*
+            The fuction creates a new node with dynamic memory allocation.
+            It returns the address of the new_node.
+        */
     }
 
+    // Checks if a given position is valid within the list bounds.
     bool checkInvalidPosition(int position)
     {
-
-        if (position > countNodes() + 1 || position <= 0)
+        if (position > countNodes() || position <= 0)
         {
             cout << "Invalid Position!" << endl;
             return true;
         }
-        else
-            return false;
+        return false;
 
         /*
-            if position is greater than or 0 or less than 0, position is invalid.
+            if position is greater than number of nodes or 0 or less than 0, position is invalid.
         */
     }
 
 public:
+    // Constructor initializes the list with a single node entered by the user.
     Singly()
     {
-        head = createNode();
-        tail = head;
-        cout << "Linked List Created\n";
+        head = nullptr;
+        tail = nullptr;
     }
 
+    bool checkEmpty()
+    {
+        if (head == nullptr || tail == nullptr)
+        {
+            cout << "Linked list is empty!\n";
+            return true;
+        }
+        return false;
+    }
+
+    // Counts the number of nodes in the linked list.
     int countNodes()
     {
         int count = 0;
         Node *temp = head;
         while (temp != nullptr)
         {
-            temp = temp->next_addr;
             count++;
+            temp = temp->next_addr;
         }
         return count;
     }
 
-    void displayNodes() // This function prints the linked list;
+    // Displays all nodes in the linked list.
+    void displayNodes()
     {
         if (checkEmpty())
             return;
 
         Node *temp = head;
-        cout << "Number of Nodes(s): " << countNodes() << endl;
 
-        while (temp->next_addr != NULL)
+        cout << "\n-----------------------" << endl
+             << "Number of Node(s): " << countNodes() << endl;
+
+        while (temp != nullptr)
         {
-            printf("| %d |\t", temp->data);
+            cout << "| " << temp->data << " | ";
             temp = temp->next_addr;
         }
-        cout << endl;
-
-        /*
-            This function prints the linked list;
-
-            The time complecity to print is O(n) as each node is travesed.
-        */
+        cout << "\n-----------------------\n"
+             << endl;
     }
 
+    // Inserts a new node at the front of the list.
     bool insertNodeAtFront()
     {
-        if (checkEmpty())
-        {
-            head = createNode();
-            tail = head;
-        }
+
+        Node *temp = createNode();
+        if (head == nullptr)
+            tail = temp;
         else
-        {
-            Node *temp = createNode();
             temp->next_addr = head;
-            head = temp;
-        }
+        head = temp;
+
         return true;
     }
 
+    // Deletes the node at the front of the list.
     bool deleteNodeAtFront()
     {
         if (checkEmpty())
             return false;
 
-        Node *temp = this->head;
-        this->head = this->head->next_addr;
-        
-        delete (temp);
+        Node *temp = head;
+        head = head->next_addr;
+        delete temp;
         temp = nullptr;
+
+        // If the list became empty, update the tail to nullptr as well.
+        if (head == nullptr)
+            tail = nullptr;
+
         return true;
     }
 
-    bool insertNodeAtEnd() // This function inserts node with a value at the end of linked list
+    // Inserts a new node at the end of the list.
+    bool insertNodeAtEnd()
     {
-        if (checkEmpty())
-            return false;
-
         Node *temp = createNode();
-        tail->next_addr = temp;
+        if (tail == nullptr)
+            head = temp;
+        else
+            tail->next_addr = temp;
+
         tail = temp;
 
         return true;
-        /*
-            while (head->link != NULL)
-            head = head->link;
-
-            head->link = temp;
-        This can also be done but it increases time complexity.,
-        this is not efficient
-        head is passed in as argument inseat of current_end;
-        and the return type of function can be void
-        */
     }
 
+    // Deletes the node at the end of the list.
     bool deleteNodeAtEnd()
     {
         if (checkEmpty())
             return false;
 
-        Node *temp = head;
-
-        if (temp->next_addr == nullptr)
+        // If there's only one node, reset the head and tail.
+        if (tail == head)
         {
-            delete (temp);
-            head = nullptr;
+            delete tail;
             tail = nullptr;
-            return true;
+            head = nullptr;
         }
+        else
+        {
+            Node *temp = head;
+            // Traverse to the second-last node.
+            while (temp->next_addr != tail)
+                temp = temp->next_addr;
 
-        while (temp->next_addr != tail)
-            temp = temp->next_addr;
-
-        temp->next_addr = nullptr;
-        delete (tail);
-        tail = temp;
+            // Update the second-last node to become the new tail.
+            temp->next_addr = nullptr;
+            delete tail;
+            tail = temp;
+        }
         return true;
     }
 
+    // Inserts a new node at a specified position.
     bool insertNodeAtPosition(int position)
     {
         if (checkEmpty())
@@ -176,51 +174,112 @@ public:
         else if (checkInvalidPosition(position))
             return false;
 
+        // If inserting at the front, use insertNodeAtFront.
         if (position == 1)
             insertNodeAtFront();
         else
         {
-            Node *new_node = createNode(), *temp;
+            Node *new_node = createNode();
+            Node *temp = head;
 
+            // Traverse to the node before the insertion position.
             for (size_t i = 1; i < position - 1; i++)
                 temp = temp->next_addr;
 
+            // Insert the new node at the specified position.
             new_node->next_addr = temp->next_addr;
             temp->next_addr = new_node;
         }
         return true;
     }
 
+    // Deletes a node at a specified position.
     bool deleteNodeAtPosition(int position)
     {
         if (checkEmpty())
             return false;
-        else if (position == countNodes() + 1)
-        {
-            checkInvalidPosition(position + 1);
-            return false;
-        }
-
         else if (checkInvalidPosition(position))
             return false;
 
+        // If deleting the first node, use deleteNodeAtFront.
         if (position == 1)
             deleteNodeAtFront();
+
         else
         {
-            Node *node_bef_pos, *temp = head;
+            Node *temp = nullptr, *node_bef_pos = head;
 
-            for (size_t i = 1; i < position; ++i)
+            // Traverse to the node before the target position.
+            for (size_t i = 1; i < position - 1; i++)
             {
-                node_bef_pos = temp;
-                temp = temp->next_addr;
+                node_bef_pos = node_bef_pos->next_addr;
             }
-
+            temp = node_bef_pos->next_addr;
+            // Remove the node at the specified position.
             node_bef_pos->next_addr = temp->next_addr;
-
             delete temp;
             temp = nullptr;
+
+            // Update the tail if the last node was deleted.
+            if (node_bef_pos->next_addr == nullptr)
+                tail = node_bef_pos;
         }
+        return true;
+    }
+
+    bool createEntireList()
+    {
+        if (checkEmpty())
+        {
+            cout << "\nEntire list can only be created when it is empty!" << endl;
+            return false;
+        }
+
+        int no_of_nodes;
+        cout << "Entire new linkedlist will be created!\nEnter the number of nodes in linked list: ";
+        cin >> no_of_nodes;
+
+        if (no_of_nodes > 0)
+        {
+            for (size_t i = 1; i <= no_of_nodes; i++)
+            {
+                cout << "For Node " << i << ": \n";
+                insertNodeAtEnd();
+            }
+            cout << "Linked List Created\n";
+        }
+        else
+            cout << "Invalid number! No list created!\n";
+        return true;
+    }
+
+    bool deleteEntireList()
+    {
+        if (checkEmpty())
+            return false;
+
+        while (head != nullptr)
+            deleteNodeAtFront();
+
+        return true;
+    }
+
+    bool reverseList()
+    {
+        if (checkEmpty())
+            return false;
+
+        Node *front_node = head, *prev_node = nullptr, *next_node = nullptr;
+
+        while (front_node != nullptr)
+        {
+            next_node = front_node->next_addr;
+            front_node->next_addr = prev_node;
+            prev_node = front_node;
+            front_node = next_node;
+        }
+        front_node = prev_node;
+        head = front_node;
         return true;
     }
 };
