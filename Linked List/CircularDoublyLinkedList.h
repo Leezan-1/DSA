@@ -1,6 +1,5 @@
-
-
-/* Circular linked list is the type of linked list in which last node points
+/*
+    Circular linked list is the type of linked list in which last node points
     to the first node.
     Last node has address of first node;
 */
@@ -19,7 +18,7 @@ private:
             And the end node points to the starting node.
         */
 
-       Node(int value) : prev_addr(nullptr), next_addr(nullptr), data(value) {};
+        Node(int value) : prev_addr(nullptr), next_addr(nullptr), data(value) {};
     } Node;
 
     Node *tail;
@@ -27,7 +26,7 @@ private:
     Node *createNode()
     {
         int data;
-        cout << "\nEnter the data for node: ";
+        cout << "Enter the data for node: ";
         cin >> data;
         Node *new_node = new Node(data);
 
@@ -37,17 +36,6 @@ private:
             The fuction creates a new node with dynamic memory allocation.
             It returns the address of the new_node.
         */
-    }
-
-    bool checkEmpty()
-    {
-        if (tail == nullptr)
-        {
-            cout << "Linked list empty!" << endl;
-            return true;
-        }
-        else
-            return false;
     }
 
     bool checkInvalidPosition(int position)
@@ -61,25 +49,22 @@ private:
             return false;
 
         /*
-            if position is greater than or 0 or less than 0, position is invalid.
+            if position is greater than number of nodes or 0 or less than 0, position is invalid.
         */
     }
 
 public:
-    CircularDoubly()
-    {
-        
-        tail = createNode();
-        tail->next_addr = tail;
-        tail->prev_addr = tail;
-        cout << "Circular Doubly Linked List Created!" << endl;
+    CircularDoubly() : tail(nullptr) {}
 
-        /*
-            The intilizing of linked list consist of creating node
-            and adding it to tail pointer.
-            Circular Linked list, end node points to the first node.
-            So tail's next_addr also points to itself.
-        */
+    bool checkEmpty()
+    {
+        if (tail == nullptr)
+        {
+            cout << "Linked list empty!" << endl;
+            return true;
+        }
+        else
+            return false;
     }
 
     int countNodes()
@@ -104,21 +89,24 @@ public:
         */
     }
 
+    // Displays all nodes in the linked list.
     void displayNodes()
     {
         if (checkEmpty())
             return;
 
-        cout << endl
+        Node *temp = tail->next_addr;
+
+        cout << "\n-----------------------" << endl
              << "Number of Node(s): " << countNodes() << endl;
 
-        Node *temp_node = tail->next_addr;
         do
         {
-            printf("| %d |\t", temp_node->data);
-            temp_node = temp_node->next_addr;
-        } while (temp_node != tail->next_addr);
-        cout << endl;
+            cout << "| " << temp->data << " | ";
+            temp = temp->next_addr;
+        } while (temp != tail->next_addr);
+        cout << "\n-----------------------"
+             << endl;
 
         /*
              This function prints the linked list;
@@ -132,20 +120,27 @@ public:
         */
     }
 
+    // inserts a new node at the front of the node
     bool insertNodeAtFront()
     {
-        if (checkEmpty())
-            return false;
+        Node *new_node = createNode();
 
-        Node *temp = createNode();
-        temp->prev_addr = tail;
-        temp->next_addr = tail->next_addr;
+        if (tail == nullptr)
+        {
+            tail = new_node;
+            tail->next_addr = tail;
+            tail->prev_addr = tail;
+        }
+        else
+        {
+            new_node->prev_addr = tail;
+            new_node->next_addr = tail->next_addr;
 
-        tail->next_addr->prev_addr = temp;
-        tail->next_addr = temp;
-
-        if (tail == tail->next_addr)
-            tail->prev_addr = temp;
+            tail->next_addr->prev_addr = new_node;
+            tail->next_addr = new_node;
+            if (tail == tail->next_addr)
+                tail->prev_addr = new_node;
+        }
         return true;
 
         /*
@@ -165,6 +160,7 @@ public:
         */
     }
 
+    // deletes the node at the front of the node
     bool deleteNodeAtFront()
     {
         if (checkEmpty())
@@ -175,7 +171,6 @@ public:
         if (tail != tail->next_addr)
         {
             tail->next_addr = temp->next_addr;
-
             temp->next_addr->prev_addr = tail;
         }
         else
@@ -198,17 +193,19 @@ public:
         */
     }
 
+    // deletes the node at the end of the list
     bool deleteNodeAtEnd()
     {
         if (checkEmpty())
             return false;
 
-        Node *temp = tail;
+        Node *temp = tail, *front_node = tail->next_addr, *prev_to_temp = tail->prev_addr;
 
         if (tail != tail->next_addr)
         {
-            tail->next_addr->prev_addr = tail->prev_addr;
-            tail->prev_addr->next_addr = tail->next_addr;
+            front_node->prev_addr = tail->prev_addr;
+            prev_to_temp->next_addr = tail->next_addr;
+            tail = prev_to_temp;
         }
         else
             tail = nullptr;
@@ -217,23 +214,31 @@ public:
         return true;
     }
 
+    // inserts a new node at the end of the list
     bool insertNodeAtEnd()
     {
-        if (checkEmpty())
-            return false;
-
         Node *new_node = createNode();
-        new_node->next_addr = tail->next_addr;
-        new_node->prev_addr = tail;
 
-        tail->next_addr->prev_addr = new_node;
-        tail->next_addr = new_node;
+        if (tail == nullptr)
+        {
+            tail = new_node;
+            tail->next_addr = new_node;
+            tail->prev_addr = new_node;
+        }
+        else
+        {
+            new_node->next_addr = tail->next_addr;
+            new_node->prev_addr = tail;
 
-        tail = new_node;
+            tail->next_addr->prev_addr = new_node;
+            tail->next_addr = new_node;
 
+            tail = new_node;
+        }
         return true;
     }
 
+    // inserts a node at specified position
     bool insertNodeAtPosition(int position)
     {
         if (checkEmpty())
@@ -259,15 +264,11 @@ public:
         }
     }
 
+    // deletes a node at specified position
     bool deleteNodeAtPosition(int position)
     {
         if (checkEmpty())
             return false;
-        else if (position == countNodes() + 1)
-        {
-            checkInvalidPosition(position + 1);
-            return false;
-        }
         else if (checkInvalidPosition(position))
             return false;
 
@@ -275,24 +276,25 @@ public:
             return deleteNodeAtFront();
         else
         {
-            Node *prev_temp = tail->next_addr, *temp;
+            Node *prev_to_temp = tail->next_addr, *temp = nullptr;
 
             for (size_t i = 1; i < position - 1; i++)
-                prev_temp = prev_temp->next_addr;
+                prev_to_temp = prev_to_temp->next_addr;
 
-            temp = prev_temp->next_addr;
+            temp = prev_to_temp->next_addr;
 
-            prev_temp->next_addr = temp->next_addr;
-            temp->next_addr->prev_addr = prev_temp;
+            prev_to_temp->next_addr = temp->next_addr;
+            temp->next_addr->prev_addr = prev_to_temp;
 
             if (tail == temp)
-                tail = prev_temp;
+                tail = prev_to_temp;
 
             delete temp;
             return true;
         }
     }
 
+    //  reverses entire list
     bool deleteEntireList()
     {
         if (checkEmpty())
@@ -304,7 +306,7 @@ public:
         return true;
     }
 
-
+    //  reverses entire list
     bool reverseList()
     {
         // Reverses the circular doubly linked list.
@@ -324,5 +326,37 @@ public:
 
         tail = tail->next_addr; // Updates tail to the previous head
         return true;
+    }
+
+    // creates entire list
+    bool createEntireList()
+    {
+        if (!checkEmpty())
+        {
+            cout << "\nEntire list can only be created when it is empty!" << endl;
+            return false;
+        }
+
+        int no_of_nodes;
+        cout << "\nEntire new linkedlist will be created!\nEnter the number of nodes in linked list: ";
+        cin >> no_of_nodes;
+
+        if (no_of_nodes > 0)
+        {
+            for (size_t i = 1; i <= no_of_nodes; i++)
+            {
+                cout << "\nFor Node " << i << ": \n";
+                insertNodeAtEnd();
+            }
+            cout << "Linked List Created\n";
+        }
+        else
+            cout << "Invalid number! No list created!\n";
+        return true;
+    }
+
+    ~CircularDoubly()
+    {
+        deleteEntireList();
     }
 };
