@@ -229,21 +229,21 @@ public:
 
     bool createEntireList()
     {
-        if (checkEmpty())
+        if (!checkEmpty())
         {
             cout << "\nEntire list can only be created when it is empty!" << endl;
             return false;
         }
 
         int no_of_nodes;
-        cout << "Entire new linkedlist will be created!\nEnter the number of nodes in linked list: ";
+        cout << "\nEntire new linkedlist will be created!\nEnter the number of nodes in linked list: ";
         cin >> no_of_nodes;
 
         if (no_of_nodes > 0)
         {
             for (size_t i = 1; i <= no_of_nodes; i++)
             {
-                cout << "For Node " << i << ": \n";
+                cout << "\nFor Node " << i << ": \n";
                 insertNodeAtEnd();
             }
             cout << "Linked List Created\n";

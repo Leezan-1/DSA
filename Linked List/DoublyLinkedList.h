@@ -21,7 +21,7 @@ private:
     {
         int user_data;
 
-        cout << "\nEnter the data for node: ";
+        cout << "Enter the data for node: ";
         cin >> user_data;
 
         Node *new_node = new Node(user_data);
@@ -33,6 +33,25 @@ private:
             It returns the address of the new_node.
         */
     }
+
+    bool checkInvalidPosition(int position)
+    {
+
+        if (position > countNodes() + 1 || position <= 0)
+        {
+            cout << "Invalid Position!" << endl;
+            return true;
+        }
+        else
+            return false;
+
+        /*
+            if position is greater than number of nodes or 0 or less than 0, position is invalid.
+        */
+    }
+
+public:
+    Doubly() : head(nullptr), tail(nullptr) {};
 
     bool checkEmpty()
     {
@@ -49,25 +68,6 @@ private:
         */
     }
 
-    bool checkInvalidPosition(int position)
-    {
-
-        if (position > countNodes() + 1 || position <= 0)
-        {
-            cout << "Invalid Position!" << endl;
-            return true;
-        }
-        else
-            return false;
-
-        /*
-            if position is greater than or 0 or less than 0, position is invalid.
-        */
-    }
-
-public:
-    Doubly() : head(createNode()), tail(head) {};
-
     // Counts the nodes in list
     int countNodes()
     {
@@ -81,45 +81,38 @@ public:
         return count;
     }
 
-    // Display the list
+    // Displays all nodes in the linked list.
     void displayNodes()
     {
         if (checkEmpty())
             return;
 
         Node *temp = head;
-        cout << "Number of Nodes(s): " << countNodes() << endl;
 
-        while (temp->next_addr != NULL)
+        cout << "\n-----------------------" << endl
+             << "Number of Node(s): " << countNodes() << endl;
+
+        while (temp != nullptr)
         {
-            printf("| %d |\t", temp->data);
+            cout << "| " << temp->data << " | ";
             temp = temp->next_addr;
         }
-        cout << endl;
-
-        /*
-             This function prints the linked list;
-
-            The time complecity to print is O(n) as each node is travesed.
-        */
+        cout << "\n-----------------------"
+             << endl;
     }
 
     // Insert node at the front
     bool insertNodeAtFront()
     {
-        if (checkEmpty())
-        {
-            head = createNode();
-            tail = head;
-        }
-        else
-        {
-            Node *new_first_node = createNode();
-            new_first_node->next_addr = head;
+        Node *new_first_node = createNode();
+        new_first_node->next_addr = head;
 
+        if (head == nullptr)
+            tail = new_first_node;
+        else
             head->prev_addr = new_first_node;
-            head = new_first_node;
-        }
+
+        head = new_first_node;
         return true;
     }
 
@@ -139,24 +132,21 @@ public:
 
         delete temp;
         temp = nullptr;
+        return true;
     }
 
     // Insert node at the end
     bool insertNodeAtEnd()
     {
-        if (checkEmpty())
-        {
-            head = createNode();
-            tail = head;
-        }
-        else
-        {
-            Node *new_last_node = createNode();
-            new_last_node->prev_addr = tail;
+        Node *new_last_node = createNode();
+        new_last_node->prev_addr = tail;
 
+        if (tail == nullptr)
+            head = new_last_node;
+        else
             tail->next_addr = new_last_node;
-            tail = new_last_node;
-        }
+
+        tail = new_last_node;
         return true;
     }
 
@@ -176,10 +166,11 @@ public:
 
         delete temp;
         temp = nullptr;
+        return true;
     }
 
     // Insert node at a specific position
-    bool insertNodeAtPos(int position)
+    bool insertNodeAtPosition(int position)
     {
         if (checkEmpty())
             return false;
@@ -208,19 +199,14 @@ public:
 
             temp->next_addr = new_node;
         }
+        return true;
     }
 
     // Delete node at a specific position
-    bool deleteNodeAtPos(int position)
+    bool deleteNodeAtPosition(int position)
     {
         if (checkEmpty())
             return false;
-
-        else if (position == countNodes() + 1)
-        {
-            checkInvalidPosition(position + 1);
-            return false;
-        }
 
         else if (checkInvalidPosition(position))
             return false;
@@ -230,12 +216,12 @@ public:
 
         else
         {
-            Node *prev_temp = head;
+            Node *prev_temp = head, *temp = nullptr;
 
             for (int i = 1; i < position - 1; ++i)
                 prev_temp = prev_temp->next_addr;
 
-            Node *temp = prev_temp->next_addr;
+            temp = prev_temp->next_addr;
             prev_temp->next_addr = temp->next_addr;
 
             if (temp->next_addr != nullptr)
@@ -254,7 +240,7 @@ public:
     {
         if (checkEmpty())
             return false;
-        
+
         Node *temp = nullptr, *current = head;
         tail = head;
 
@@ -269,6 +255,46 @@ public:
         if (temp != nullptr) // Update head to the last processed node
             head = temp->prev_addr;
 
+        return true;
+    }
+
+    //  Deletes Entire list
+    bool deleteEntireList()
+    {
+        if (checkEmpty())
+            return false;
+        else
+        {
+            while (head != nullptr)
+                deleteNodeAtFront();
+            return true;
+        }
+    }
+
+    // Creates entire list of user input number of nodes.
+    bool createEntireList()
+    {
+        if (!checkEmpty())
+        {
+            cout << "\nEntire list can only be created when it is empty!" << endl;
+            return false;
+        }
+
+        int no_of_nodes;
+        cout << "\nEntire new linkedlist will be created!\nEnter the number of nodes in linked list: ";
+        cin >> no_of_nodes;
+
+        if (no_of_nodes > 0)
+        {
+            for (size_t i = 1; i <= no_of_nodes; i++)
+            {
+                cout << "\nFor Node " << i << ": \n";
+                insertNodeAtEnd();;
+            }
+            cout << "Linked List Created\n";
+        }
+        else
+            cout << "Invalid number! No list created!\n";
         return true;
     }
 };
