@@ -297,4 +297,9 @@ public:
             cout << "Invalid number! No list created!\n";
         return true;
     }
+
+    ~Doubly()
+    {
+        deleteEntireList();
+    }
 };

@@ -8,10 +8,12 @@
 class CircularSingly
 {
 private:
-    typedef struct CircularSinglyNode
+    typedef struct Node
     {
         int data;
-        struct CircularSinglyNode *next_addr;
+        struct Node *next_addr;
+
+        Node(int value) : data(value), next_addr(nullptr) {}
         /*
             This creates a node for singly circular linked list.
             The singly circular linked list contains data and address of next node.
@@ -24,11 +26,9 @@ private:
     Node *createNode()
     {
         int data;
-        cout << "\nEnter the data for node: ";
+        cout << "Enter the data for node: ";
         cin >> data;
-        Node *new_node = new Node;
-        new_node->data = data;
-        new_node->next_addr = nullptr;
+        Node *new_node = new Node(data);
         return new_node;
 
         /*
@@ -37,6 +37,42 @@ private:
         */
     }
 
+    bool checkInvalidPosition(int position)
+    {
+        int no_of_nodes = countNodes();
+
+        if (position > no_of_nodes || position <= 0)
+        {
+            cout << "Invalid Position!" << endl;
+            return true;
+        }
+        else
+            return false;
+
+        /*
+            if position is greater than number of nodes or 0 or less than 0, position is invalid.
+        */
+    }
+
+public:
+    CircularSingly() : tail(nullptr) {}
+
+    bool checkEmpty()
+    {
+        if (tail == nullptr)
+        {
+            cout << endl
+                 << "Linked List empty!" << endl;
+            return true;
+        }
+        else
+            return false;
+        /*
+            Fucntion checks if the tail pointer is null to validate empty
+        */
+    }
+
+    // Counts the number of nodes in the list
     int countNodes()
     {
         int count = 0;
@@ -59,72 +95,23 @@ private:
         */
     }
 
-    bool checkEmpty()
-    {
-        if (tail == nullptr)
-        {
-            cout << endl
-                 << "Linked List empty!" << endl;
-            return true;
-        }
-        else
-            return false;
-        /*
-            Fucntion checks if the tail pointer is null to validate empty
-        */
-    }
-
-    bool checkInvalidPosition(int position)
-    {
-        int no_of_nodes = countNodes();
-
-        if (position > no_of_nodes || position <= 0)
-        {
-            cout << "Invalid Position!" << endl;
-            return true;
-        }
-        else
-            return false;
-
-        /*
-            if position is greater than or 0 or less than 0, position is invalid.
-        */
-    }
-
-public:
-    ~CircularSingly()
-    {
-        deleteEntireList();
-    }
-
-    CircularSingly()
-    {
-        tail = createNode();
-        tail->next_addr = tail;
-        cout << "Circular Singly Linked List Created!" << endl;
-
-        /*
-            The intilizing of linked list consist of creating node
-            and adding it to tail pointer.
-            Circular Linked list, end node points to the first node.
-            So tail's next_addr also points to itself.
-        */
-    }
-
+    // Displays all nodes in the linked list.
     void displayNodes()
     {
         if (checkEmpty())
             return;
 
-        Node *temp_node = tail->next_addr;
-        cout << endl
+        Node *temp = tail->next_addr;
+
+        cout << "\n-----------------------" << endl
              << "Number of Node(s): " << countNodes() << endl;
         do
         {
-            printf("| %d |\t", temp_node->data);
-            temp_node = temp_node->next_addr;
-        } while (temp_node != tail->next_addr);
-        cout << endl;
+            cout << "| " << temp->data << " | ";
+            temp = temp->next_addr;
+        } while (temp != tail->next_addr);
+        cout << "\n-----------------------"
+             << endl;
 
         /*
              This function prints the linked list;
@@ -139,17 +126,20 @@ public:
         */
     }
 
+    // inserts a new node at the front of the node
     bool insertNodeAtFront()
     {
-        if (checkEmpty())
-            return false;
 
         Node *new_node = createNode();
-        // new_node->next_addr = tail->next_addr;
-        new_node->next_addr = tail->next_addr;
-        tail->next_addr = new_node;
 
+        if (tail == nullptr)
+            tail = new_node;
+        else
+            new_node->next_addr = tail->next_addr;
+
+        tail->next_addr = new_node;
         return true;
+
         /*
             The function adds node at the beginning of linked list.
             The new _node's next_addr stores the address of the first node i.e tail's next_addr.
@@ -157,6 +147,7 @@ public:
         */
     }
 
+    // deletes the node at the front of the node
     bool deleteNodeAtFront()
     {
         if (checkEmpty())
@@ -184,14 +175,16 @@ public:
         */
     }
 
+    // inserts a new node at the end of the list
     bool insertNodeAtEnd()
     {
-
-        if (checkEmpty())
-            return false;
-
         Node *new_node = createNode();
-        new_node->next_addr = tail->next_addr;
+        
+        if (tail == nullptr)
+            tail = new_node;
+        else
+            new_node->next_addr = tail->next_addr;
+
         tail->next_addr = new_node;
         tail = new_node;
         return true;
@@ -203,6 +196,7 @@ public:
         */
     }
 
+    // deletes the node at the end of the list
     bool deleteNodeAtEnd()
     {
         if (checkEmpty())
@@ -227,6 +221,7 @@ public:
         */
     }
 
+    // inserts a node at specified position
     bool insertNodeAtPosition(int position)
     {
 
@@ -273,6 +268,7 @@ public:
         */
     }
 
+    // deletes a node at specified position
     bool deleteNodeAtPosition(int position)
     {
         if (checkEmpty())
@@ -322,6 +318,7 @@ public:
         */
     }
 
+    //  reverses entire list
     bool reverseList()
     {
         if (checkEmpty())
@@ -352,14 +349,47 @@ public:
         */
     }
 
+    // deletes entire list
     bool deleteEntireList()
     {
         if (checkEmpty())
             return false;
-        
+
         while (tail != nullptr)
             deleteNodeAtFront();
-        
+
         return true;
+    }
+
+    // creates entire list
+    bool createEntireList()
+    {
+        if (!checkEmpty())
+        {
+            cout << "\nEntire list can only be created when it is empty!" << endl;
+            return false;
+        }
+
+        int no_of_nodes;
+        cout << "\nEntire new linkedlist will be created!\nEnter the number of nodes in linked list: ";
+        cin >> no_of_nodes;
+
+        if (no_of_nodes > 0)
+        {
+            for (size_t i = 1; i <= no_of_nodes; i++)
+            {
+                cout << "\nFor Node " << i << ": \n";
+                insertNodeAtEnd();
+            }
+            cout << "Linked List Created\n";
+        }
+        else
+            cout << "Invalid number! No list created!\n";
+        return true;
+    }
+
+    ~CircularSingly()
+    {
+        deleteEntireList();
     }
 };

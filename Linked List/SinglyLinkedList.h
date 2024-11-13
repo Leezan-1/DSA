@@ -43,11 +43,7 @@ private:
 
 public:
     // Constructor initializes the list with a single node entered by the user.
-    Singly()
-    {
-        head = nullptr;
-        tail = nullptr;
-    }
+    Singly() : head(nullptr), tail(nullptr) {}
 
     bool checkEmpty()
     {
@@ -227,6 +223,7 @@ public:
         return true;
     }
 
+    // creates entire list
     bool createEntireList()
     {
         if (!checkEmpty())
@@ -253,6 +250,7 @@ public:
         return true;
     }
 
+    // delete entire list
     bool deleteEntireList()
     {
         if (checkEmpty())
@@ -264,6 +262,7 @@ public:
         return true;
     }
 
+    // Reverses entire list
     bool reverseList()
     {
         if (checkEmpty())
@@ -281,5 +280,10 @@ public:
         front_node = prev_node;
         head = front_node;
         return true;
+    }
+
+    ~Singly()
+    {
+        deleteEntireList();
     }
 };
