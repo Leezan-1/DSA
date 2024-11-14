@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Stack.h"
+#include "ApplicationFunctions.h"
 
 #define POSTFIX_EXP "34 4 + 10 + 4 5 - *"
 // space between each character is essential to correctly execute the oepration

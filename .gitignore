@@ -4,7 +4,7 @@ DynamicMemory
 PassByReference
 PostfixOperation
 PrefixOperation
-Stack
+
 DSA.code-workspace
 Factorial
 FibonacciSequence
@@ -20,5 +20,11 @@ LinkedList
 SinglyLinkedList
 DoublyLinkedList
 CircularSinglyLinkedList
-LLpractice*
+LLpractice.cpp
+LLpractice
+#
+#   Stack folder
 PrimeFactorization
+ApplicationFunctions
+DecimalToBinary
+StackOperation
