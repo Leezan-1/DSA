@@ -1,19 +1,18 @@
 #include <iostream>
 #include <string>
-#include "Stack.cpp"
+#include "Stack.h"
 
 #define POSTFIX_EXP "34 4 + 10 + 4 5 - *"
 // space between each character is essential to correctly execute the oepration
 
 
 using namespace std;
-using namespace stackk;
-
 int main()
 {
 
     size_t pos = 0, previous_pos, gap_between_space, number;
-    Stack postfix_stack;
+    
+    ArrayStack::Stack postfix_stack;
 
     string expression = POSTFIX_EXP;
     cout << "The postfix expression is: " << POSTFIX_EXP << endl
