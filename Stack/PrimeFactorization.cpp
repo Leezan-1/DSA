@@ -1,8 +1,9 @@
 #include <iostream>
-#include "Stack.h"
 using namespace std;
 
-ArrayStack::Stack stack1;
+#include "Stack.h"
+
+LinkedListStack::Stack stack1;
 
 void primeFactorization(int number)
 {
@@ -20,7 +21,7 @@ void primeFactorization(int number)
 }
 int main()
 {
-    unsigned int number;
+    unsigned int number=2048;
     cout << "Enter the number to be prime factorized!: ";
     cout << number << endl;
     primeFactorization(number);

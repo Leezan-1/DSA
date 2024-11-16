@@ -25,17 +25,16 @@ private:
             It returns the address of the new_node.
         */
     }
+    Node *createNode(int data)
+    {
+        Node *new_node = new Node(data);
+        return new_node;
+    }
 
     // Checks if a given position is valid within the list bounds.
     bool checkInvalidPosition(int position)
     {
-        if (position > countNodes() || position <= 0)
-        {
-            cout << "Invalid Position!" << endl;
-            return true;
-        }
-        return false;
-
+        return (position > countNodes() || position <= 0) ? true : false;
         /*
             if position is greater than number of nodes or 0 or less than 0, position is invalid.
         */
@@ -47,17 +46,17 @@ public:
 
     bool checkEmpty()
     {
-        if (head == nullptr || tail == nullptr)
-        {
-            cout << "Linked list is empty!\n";
-            return true;
-        }
-        return false;
+        return (head == nullptr || tail == nullptr) ? true : false;
     }
 
     // Counts the number of nodes in the linked list.
     int countNodes()
     {
+        if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
+            return 0;
+        }
         int count = 0;
         Node *temp = head;
         while (temp != nullptr)
@@ -72,7 +71,10 @@ public:
     void displayNodes()
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return;
+        }
 
         Node *temp = head;
 
@@ -102,11 +104,27 @@ public:
         return true;
     }
 
+    bool insertNodeAtFront(int data)
+    {
+
+        Node *temp = createNode(data);
+        if (head == nullptr)
+            tail = temp;
+        else
+            temp->next_addr = head;
+        head = temp;
+
+        return true;
+    }
+
     // Deletes the node at the front of the list.
     bool deleteNodeAtFront()
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return false;
+        }
 
         Node *temp = head;
         head = head->next_addr;
@@ -138,7 +156,10 @@ public:
     bool deleteNodeAtEnd()
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return false;
+        }
 
         // If there's only one node, reset the head and tail.
         if (tail == head)
@@ -166,9 +187,15 @@ public:
     bool insertNodeAtPosition(int position)
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return false;
+        }
         else if (checkInvalidPosition(position))
+        {
+            cout << "Invalid Position!" << endl;
             return false;
+        }
 
         // If inserting at the front, use insertNodeAtFront.
         if (position == 1)
@@ -193,9 +220,15 @@ public:
     bool deleteNodeAtPosition(int position)
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return false;
+        }
         else if (checkInvalidPosition(position))
+        {
+            cout << "Invalid Position" << endl;
             return false;
+        }
 
         // If deleting the first node, use deleteNodeAtFront.
         if (position == 1)
@@ -254,7 +287,10 @@ public:
     bool deleteEntireList()
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return false;
+        }
 
         while (head != nullptr)
             deleteNodeAtFront();
@@ -266,7 +302,10 @@ public:
     bool reverseList()
     {
         if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
             return false;
+        }
 
         Node *front_node = head, *prev_node = nullptr, *next_node = nullptr;
 
@@ -280,6 +319,27 @@ public:
         front_node = prev_node;
         head = front_node;
         return true;
+    }
+
+    int accessAtPosition(int position)
+    {
+        if (checkEmpty())
+        {
+            cout << "Linked List Empty!" << endl;
+            return -1;
+        }
+        else if (checkInvalidPosition(position))
+        {
+            cout << "Invalid Position!" << endl;
+            return -1;
+        }
+
+        Node *node_at_pos = head;
+        for (size_t i = 1; i < position; i++)
+            node_at_pos = node_at_pos->next_addr;
+
+        int data_at_position = node_at_pos->data;
+        return data_at_position;
     }
 
     ~Singly()

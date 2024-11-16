@@ -1,4 +1,4 @@
-
+#include "../Linked List/SinglyLinkedList.h"
 #define STACK_SIZE 10
 
 using namespace std;
@@ -72,14 +72,6 @@ namespace ArrayStack
             return top + 1;
         }
 
-        int change(int pos, int val)
-        {
-            int prevVal = stack_array[pos];
-            stack_array[pos] = val;
-            cout << "Value changed at location" << pos << endl;
-            return prevVal;
-        }
-
         void display()
         {
             cout << "All values in the stack are" << endl;
@@ -93,5 +85,57 @@ namespace ArrayStack
     };
 } // namespace ArrayStack
 
+namespace LinkedListStack
+{
+    class Stack
+    {
+    private:
+        int top;
+        Singly linkedlist;
 
+    public:
+        Stack() : top{-1} {}
 
+        bool isEmpty()
+        {
+            return (top == -1) ? true : false;
+        }
+
+        int push(int val)
+        {
+            linkedlist.insertNodeAtFront(val);
+            top++;
+            return top;
+        }
+
+        int pop()
+        {
+            if (linkedlist.checkEmpty())
+                return -1;
+            int popped_data = linkedlist.accessAtPosition(0 + 1);
+            top--;
+            linkedlist.deleteNodeAtFront();
+            return popped_data;
+        }
+
+        int count()
+        {
+            return top + 1;
+        }
+
+        int peek(int pos)
+        {
+            return linkedlist.accessAtPosition(pos + 1);
+        }
+
+        void display()
+        {
+            int no_of_nodes = linkedlist.countNodes();
+            cout << "\nAll values in the stack are" << endl;
+            for (size_t i = 0; i < no_of_nodes; i++)
+                cout << "|" << "\t" << peek(i) << "\t" << "|" << endl;
+            cout << endl;
+        }
+    };
+
+}
