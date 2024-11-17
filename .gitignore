@@ -11,7 +11,6 @@ PassByReference
 PostfixOperation
 PrefixOperation
 
-DSA.code-workspace
 Factorial
 FibonacciSequence
 StringReversal
