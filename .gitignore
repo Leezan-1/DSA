@@ -6,6 +6,10 @@ DSA.code-workspace
 # Class/
 ObjectsAsArguments
 
+#Strings/
+C-Style
+StringFunctions
+
 DynamicMemory
 PassByReference
 PostfixOperation
