@@ -18,7 +18,6 @@ int main()
              << "4. isFull()" << endl
              << "5. peek()" << endl
              << "6. count()" << endl
-             << "7. change()" << endl
              << "8. display()" << endl
              << "9. Clear Screen" << endl
              << "Enter 0 to exit. Select Option Number: ";
@@ -53,12 +52,6 @@ int main()
 
         case 6: // Count
             cout << "There are " << stack1.count() << " number of elements in stacks" << endl;
-            break;
-
-        case 7: //  Change
-            cout << "Enter the Position and Value of stack that needs to be changed, respectively" << endl;
-            cin >> position >> value;
-            stack1.change(position, value);
             break;
 
         case 8: // Display Stack

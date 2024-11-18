@@ -91,7 +91,7 @@ namespace LinkedListStack
     {
     private:
         int top;
-        Singly linkedlist;
+        NumericLinkedList::Singly linkedlist;
 
     public:
         Stack() : top{-1} {}
@@ -139,3 +139,58 @@ namespace LinkedListStack
     };
 
 }
+
+namespace LinkedListStringStack
+{
+    class Stack
+    {
+    private:
+        int top;
+        StringLinkedList::Singly linkedlist;
+
+    public:
+        Stack() : top{-1} {}
+
+        bool isEmpty()
+        {
+            return (top == -1) ? true : false;
+        }
+
+        int push(string val)
+        {
+            linkedlist.insertNodeAtFront(val);
+            top++;
+            return top;
+        }
+
+        string pop()
+        {
+            if (linkedlist.checkEmpty())
+                return "-1";
+            string popped_data = linkedlist.accessAtPosition(0 + 1);
+            top--;
+            linkedlist.deleteNodeAtFront();
+            return popped_data;
+        }
+
+        int count()
+        {
+            return top + 1;
+        }
+
+        string peek(int pos)
+        {
+            return linkedlist.accessAtPosition(pos + 1);
+        }
+
+        void display()
+        {
+            int no_of_nodes = linkedlist.countNodes();
+            cout << "\nAll values in the stack are" << endl;
+            for (size_t i = 0; i < no_of_nodes; i++)
+                cout << "|" << "\t" << peek(i) << "\t" << "|" << endl;
+            cout << endl;
+        }
+    };
+
+} // namespace LinkedListStringStack
