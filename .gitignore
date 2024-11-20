@@ -3,7 +3,7 @@ build/
 DSA.code-workspace
 
 # Basics/
-# Class/
+# Basics/Class/
 ObjectsAsArguments
 
 #Strings/
@@ -12,8 +12,6 @@ StringFunctions
 
 DynamicMemory
 PassByReference
-PostfixOperation
-PrefixOperation
 
 Factorial
 FibonacciSequence
@@ -25,15 +23,20 @@ Calloc
 Realloc
 Malloc
 Free
-LinkedList
-SinglyLinkedList
-DoublyLinkedList
+#LinkedList/
 CircularSinglyLinkedList
-LLpractice.cpp
+DoublyLinkedList
+LinkedList
 LLpractice
-#
-#   Stack folder
-PrimeFactorization
+LLpractice.cpp
+SinglyLinkedList
+
+#Stack/
 ApplicationFunctions
 DecimalToBinary
+InfixToPostfix
+PostfixOperation
+PrefixOperation
+PrimeFactorization
+Stack
 StackOperation

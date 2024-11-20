@@ -1,4 +1,4 @@
-#include <string>
+
 using namespace std;
 
 namespace NumericLinkedList
@@ -378,17 +378,17 @@ namespace StringLinkedList
         struct Node
         {
             Node *next_addr;
-            string data;
-            Node(string value) : data(value), next_addr(nullptr) {}
+            char data;
+            Node(char value) : data(value), next_addr(nullptr) {}
         };
 
         Node *head, *tail;
 
         Node *createNode()
         {
-            string data;
+            char data;
             cout << "Enter the data for node: ";
-            getline(cin >> ws, data);
+            cin >> data;
             Node *new_node = new Node(data);
             return new_node;
 
@@ -398,7 +398,7 @@ namespace StringLinkedList
             */
         }
 
-        Node *createNode(string data)
+        Node *createNode(char data)
         {
             Node *new_node = new Node(data);
             return new_node;
@@ -416,21 +416,15 @@ namespace StringLinkedList
         // Constructor initializes the list with a single node entered by the user.
         Singly() : head(nullptr), tail(nullptr) {}
 
-        ~Singly()
-        {
-            deleteEntireList();
-        }
-
         // Checks if linkedlist is empty
         bool checkEmpty()
         {
-            return (head == nullptr || tail == nullptr) ? true : false;
+            return (head == nullptr) ? true : false;
         }
 
         // Counts the number of nodes in the linked list.
         int countNodes()
         {
-
             if (checkEmpty())
             {
                 cout << "Linked List Empty!" << endl;
@@ -470,29 +464,23 @@ namespace StringLinkedList
         }
 
         // accesses data in the given position;
-        string accessAtPosition(int position)
+        char accessAtPosition(int position)
         {
             if (checkEmpty())
-            {
-                cout << "Linked List Empty!" << endl;
-                return "-1";
-            }
+                return '\0';
             else if (checkInvalidPosition(position))
-            {
-                cout << "Invalid Position!" << endl;
-                return "-1";
-            }
+                return '\0';
 
             Node *node_at_pos = head;
             for (size_t i = 1; i < position; i++)
                 node_at_pos = node_at_pos->next_addr;
 
-            string data_at_position = node_at_pos->data;
+            char data_at_position = node_at_pos->data;
             return data_at_position;
         }
 
         // Insets node at front by given data
-        bool insertNodeAtFront(string data)
+        bool insertNodeAtFront(char data)
         {
 
             Node *temp = createNode(data);
@@ -509,10 +497,7 @@ namespace StringLinkedList
         bool deleteNodeAtFront()
         {
             if (checkEmpty())
-            {
-                cout << "Linked List Empty!" << endl;
                 return false;
-            }
 
             Node *temp = head;
             head = head->next_addr;
@@ -527,7 +512,7 @@ namespace StringLinkedList
         }
 
         // Inserts a new node at the end of the list.
-        bool insertNodeAtEnd(string data)
+        bool insertNodeAtEnd(char data)
         {
             Node *temp = createNode(data);
             if (tail == nullptr)
@@ -585,7 +570,7 @@ namespace StringLinkedList
         }
 
         // Inserts a new node at a specified position.
-        bool insertNodeAtPosition(int position, string data)
+        bool insertNodeAtPosition(int position, char data)
         {
             if (checkEmpty())
             {
@@ -721,5 +706,4 @@ namespace StringLinkedList
             return true;
         }
     };
-
 }

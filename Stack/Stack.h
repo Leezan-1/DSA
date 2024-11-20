@@ -156,18 +156,18 @@ namespace LinkedListStringStack
             return (top == -1) ? true : false;
         }
 
-        int push(string val)
+        int push(char val)
         {
             linkedlist.insertNodeAtFront(val);
             top++;
             return top;
         }
 
-        string pop()
+        char pop()
         {
             if (linkedlist.checkEmpty())
-                return "-1";
-            string popped_data = linkedlist.accessAtPosition(0 + 1);
+                return '\0';
+            char popped_data = linkedlist.accessAtPosition(1);
             top--;
             linkedlist.deleteNodeAtFront();
             return popped_data;
@@ -178,9 +178,14 @@ namespace LinkedListStringStack
             return top + 1;
         }
 
-        string peek(int pos)
+        char peek(int pos)
         {
             return linkedlist.accessAtPosition(pos + 1);
+        }
+
+        char peek()
+        {
+            return linkedlist.accessAtPosition(1);
         }
 
         void display()
