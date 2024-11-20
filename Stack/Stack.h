@@ -1,7 +1,5 @@
 #include "../Linked List/SinglyLinkedList.h"
 
-using namespace std;
-
 namespace ArrayStack
 {
     namespace Numeric
