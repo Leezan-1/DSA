@@ -1,6 +1,4 @@
 
-using namespace std;
-
 namespace NumericLinkedList
 {
     class Singly
@@ -361,11 +359,6 @@ namespace NumericLinkedList
 
             int data_at_position = node_at_pos->data;
             return data_at_position;
-        }
-
-        ~Singly()
-        {
-            deleteEntireList();
         }
     };
 }

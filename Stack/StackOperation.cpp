@@ -5,7 +5,7 @@ using namespace std;
 
 int main()
 {
-    ArrayStack::Stack stack1;
+    ArrayStack::Numeric::Stack stack1;
     int option, value, position;
 
     do

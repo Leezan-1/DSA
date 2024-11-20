@@ -3,7 +3,7 @@ using namespace std;
 
 #include "Stack.h"
 
-LinkedListStack::Stack stack1;
+LinkedListStack::Numeric::Stack stack1;
 
 void primeFactorization(int number)
 {

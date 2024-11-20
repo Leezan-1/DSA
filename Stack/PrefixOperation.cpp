@@ -12,7 +12,7 @@ int main()
     string expression = PREFIX_EXP;
     size_t pos = expression.length(), previous_pos, gap_between_space;
 
-    ArrayStack::Stack prefix_stack;
+    ArrayStack::Numeric::Stack prefix_stack;
 
     cout << "The prefix expression is: " << expression << endl
          << endl;

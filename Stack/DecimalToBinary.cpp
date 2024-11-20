@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ArrayStack::Stack stack1;
+ArrayStack::Numeric::Stack stack1;
 
 void decimalToBinary(int number)
 {
