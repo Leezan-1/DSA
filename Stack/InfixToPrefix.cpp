@@ -81,10 +81,10 @@ int checkPrecedence(char symbol)
     }
 }
 
-string infixToPostfix(const string &infix_exp)
+string infixToPrefix(const string &infix_exp)
 {
     LinkedListStack::Character::Stack operator_stackk; // A stack to store operator is initialized
-    string postfix_exp, number;                        // number is used to separate from string which will be added in exprssion
+    string prefix_exp, number;                         // number is used to separate from string which will be added in exprssion
 
     for (size_t i = 0; i < infix_exp.length(); i++)
     // Scanning the expression from left to right
@@ -97,10 +97,10 @@ string infixToPostfix(const string &infix_exp)
 
         else // if symbol is not a number, is any character
         {
-            if (!number.empty())             // if number var is not empty it means there is a number that
-            {                                //  needs to be concatinated with postfix expression
-                postfix_exp += number + " "; // this concatinates each number in pf exp. with space in btwn
-                number.clear();              // number needs to be cleared.
+            if (!number.empty())                        // if number var is not empty it means there is a number that
+            {                                           //  needs to be concatinated with postfix expression
+                prefix_exp = " " + number + prefix_exp; // this concatinates each number in pf exp. with space in btwn
+                number.clear();                         // number needs to be cleared.
             }
 
             // if (std::isspace(symbol)) // if the character is space then
@@ -130,24 +130,24 @@ string infixToPostfix(const string &infix_exp)
             {
                 char operatorr;
                 while ((operatorr = operator_stackk.pop()) != '(')
-                {
-                    postfix_exp += operatorr;
-                    postfix_exp += ' ';
-                }
+                    prefix_exp = operatorr + prefix_exp;
+
                 break;
             }
             case '}':
             {
                 char operatorr;
                 while ((operatorr = operator_stackk.pop()) != '{')
-                    postfix_exp += operatorr;
+                    prefix_exp = operatorr + prefix_exp;
+
                 break;
             }
             case ']':
             {
                 char operatorr;
                 while ((operatorr = operator_stackk.pop()) != '[')
-                    postfix_exp += operatorr;
+                    prefix_exp = operatorr + prefix_exp;
+
                 break;
             }
 
@@ -163,7 +163,7 @@ string infixToPostfix(const string &infix_exp)
             case '+':
             case '-':
                 while (!operator_stackk.isEmpty() && checkPrecedence(operator_stackk.peek()) >= checkPrecedence(symbol))
-                    postfix_exp += operator_stackk.pop();
+                    prefix_exp = operator_stackk.pop() + prefix_exp;
                 operator_stackk.push(symbol);
                 break;
 
@@ -178,13 +178,13 @@ string infixToPostfix(const string &infix_exp)
 
     // Then, first check if there is number left to concat in expresssion. if true: concat it.
     if (!number.empty())
-        postfix_exp += number + " ";
+        prefix_exp = " " + number + prefix_exp;
 
     // Then check if there are operators in the stack, if there is add to the expression
     while (!operator_stackk.isEmpty())
-        postfix_exp += operator_stackk.pop();
+        prefix_exp = operator_stackk.pop() + prefix_exp;
 
-    return postfix_exp;
+    return prefix_exp;
 }
 
 int arthematicOperation(int first_operand, int second_operand, char operatorr)
@@ -221,21 +221,31 @@ int arthematicOperation(int first_operand, int second_operand, char operatorr)
     }
 }
 
-int postfixOperation(const string &postfix_exp)
+void reverseStringInPlace(std::string &stringToReverse)
+{
+    int numCharacters = stringToReverse.length();
+    for (int i = 0; i < numCharacters / 2; i++)
+    {
+        std::swap(stringToReverse[i], stringToReverse[numCharacters - i - 1]);
+    }
+}
+
+int prefixOperation(const string &prefix_exp)
 {
     LinkedListStack::Numeric::Stack operand_stackk; // initalize a stack to store operand
     string number;
 
-    for (size_t i = 0; i < postfix_exp.length(); i++)
+    for (int i = prefix_exp.length() - 1; i >= 0; i--)
     // iterate each character in the expression
     {
-        char ch = postfix_exp[i];
+        char ch = prefix_exp[i];
         if (std::isdigit(ch))
             number += ch;
         else
         {
             if (!number.empty())
             {
+                reverseStringInPlace(number);
                 operand_stackk.push(stoi(number));
                 number.clear();
             }
@@ -254,17 +264,17 @@ int postfixOperation(const string &postfix_exp)
 
 int main()
 {
-    cout << "Program: Infix expression to Postfix and its evaluation\n"
+    cout << "Program: Infix expression to Prefix and its evaluation\n"
          << endl;
-    string expression = "8 7* (5 ^ 4 + 2) - 6^2 / (9+3)";
+    string expression = "8 * (5 ^ 4 + 2) - 6^2 / (9+3)";
     expression = removeSpace(expression);
 
     cout << "Input expression: " << expression << endl;
     if (checkBrackets(expression))
     {
-        expression = infixToPostfix(expression);
-        cout << "Resultant postfix expression: " << expression << endl
-             << "Final result: " << postfixOperation(expression) << endl;
+        expression = infixToPrefix(expression);
+        cout << "Resultant prefix expression: " << expression << endl
+             << "Final result: " << prefixOperation(expression) << endl;
     }
     return 0;
 }
