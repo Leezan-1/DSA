@@ -11,15 +11,19 @@ std::vector<int> Solution::twoSum(vector<int> &nums, int target)
     return {};
 }
 
-void twoSumDisplay()
+void twoSumDisplay(vector<int> test_case, int target)
 {
-    cout << "\n~~ 1. Two Sum  ~~\n";
-    Solution twoSumSolution;
-    vector<int> nums = {3, 2, 4};
-    int target = 6;
+    static int case_no = 0;
+    Solution two_sum_solution;
 
-    cout << "The indices that add upto " << target << " is : [";
-    for (int i : twoSumSolution.twoSum(nums, target))
+    cout << "\nCase " << ++case_no << ":\n";
+    cout << "Input x = [";
+    for(int num : test_case)
+        cout << num << ",";
+    cout << "], target = " << target << endl;
+
+    cout << "Output: ["; 
+    for (int i : two_sum_solution.twoSum(test_case, target))
         cout << i << ",";
     cout << "]\n";
 }

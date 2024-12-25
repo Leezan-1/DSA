@@ -1,6 +1,6 @@
 bool Solution::isPalindrome(int x)
 {
-    if (x < 0)
+    if (x < 0) 
         return false;
 
     long reverse = 0;
@@ -15,16 +15,16 @@ bool Solution::isPalindrome(int x)
     return (reverse == x) ? true : false;
 }
 
-void palindromeNumberDisplay()
+void palindromeNumberDisplay(int test_cases)
 {
-    cout << "\n~~ 9. Palindrome Number ~~\n";
-    
-    int integer = 121;
+    static int case_no = 0;
     Solution palindrome_number_solution;
-    
-    string result = palindrome_number_solution.isPalindrome(integer) ? "True" : "False";
-    cout << "The number is a palindrome: " << result << endl;
 
+    cout << "\nCase " << ++case_no << ":\n";
+    cout << "Input x = " << test_cases << endl;
+
+    string output = palindrome_number_solution.isPalindrome(test_cases) ? "True" : "False";
+    cout << "Output: " << output << endl;
 }
 
 /*
@@ -32,7 +32,7 @@ Given an integer x, return true if x is a
 palindrome
 , and false otherwise.
 
- 
+
 
 Example 1:
 
@@ -52,7 +52,7 @@ Input: x = 10
 Output: false
 Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
 
- 
+
 
 Constraints:
     -2^31 <= x <= 2^31 - 1
