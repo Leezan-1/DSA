@@ -4,7 +4,10 @@
 
 int main()
 {
+    // 1. Two Sum
     twoSumDisplay();
+
+    // 9. Palindrome Number
     palindromeNumberDisplay();
     return 0;
 }
