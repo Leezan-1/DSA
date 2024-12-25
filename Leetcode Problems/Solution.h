@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-using std::cout, std::cin, std::endl, std::vector, std::size_t;
+using std::cout, std::cin, std::endl, std::vector, std::size_t, std::string;
 
 class Solution
 {

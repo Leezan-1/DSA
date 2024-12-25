@@ -5,6 +5,6 @@
 int main()
 {
     twoSumDisplay();
-
+    palindromeNumberDisplay();
     return 0;
 }
