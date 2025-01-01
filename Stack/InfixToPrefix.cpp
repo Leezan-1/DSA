@@ -4,9 +4,10 @@ using std::cerr;
 using std::cin;
 using std::cout;
 using std::endl;
+using std::size_t;
 using std::string;
 
-#include "stack.h"
+#include "Stack.h"
 
 string removeSpace(const string &expression)
 {
