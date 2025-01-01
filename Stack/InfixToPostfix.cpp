@@ -4,6 +4,7 @@ using std::cerr;
 using std::cin;
 using std::cout;
 using std::endl;
+using std::size_t;
 using std::string;
 
 #include "Stack.h"

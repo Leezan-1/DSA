@@ -1,8 +1,11 @@
 #include <iostream>
-// #include "../Linked List/SinglyLinkedList.h"
-using std::cout, std::cin, std::endl, std::size_t, std::string;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::size_t;
+using std::string;
 
-#include "Queue.cpp"
+#include "queue.h"
 
 int displayOptions()
 {
@@ -31,8 +34,8 @@ int displayOptions()
 
 int main()
 {
-    ArrayQueue::LinearQueue linear_queue;
-    int option, position, value, enqueue_position, dequeued_element;
+    CircularQueue *queue = new CircularQueue();
+    int option, value, dequeued_element;
 
     do
     {
@@ -46,37 +49,38 @@ int main()
         case 1: //  Enqueue
             cout << "Enter the value to enqueue: ";
             cin >> value;
-            linear_queue.enqueue(value);
+
+            queue->enqueue(value);
             break;
 
         case 2: //  Dequeue
-            dequeued_element = linear_queue.dequeue();
+            dequeued_element = queue->dequeue();
             (dequeued_element >= 0) ? cout << "The dequeued element is: " << dequeued_element << endl : cout << endl;
             break;
 
         case 3: //   isEmpty!
-            linear_queue.isEmpty() ? cout << "The queue is empty." << endl : cout << "The queue is not empty" << endl;
+            queue->isEmpty() ? cout << "The queue is empty." << endl : cout << "The queue is not empty" << endl;
             break;
 
         case 4: //  isFull!
-            linear_queue.isFull() ? cout << "The queue is full." << endl : cout << "The queue is not full" << endl;
+            queue->isFull() ? cout << "The queue is full." << endl : cout << "The queue is not full" << endl;
             break;
 
         case 5: // Front
-            cout << "The element in front is: " << linear_queue.front() << endl;
+            cout << "The element in front is: " << queue->front() << endl;
             break;
 
         case 6: // Rear
-            linear_queue.isEmpty() ? cout << "Queue is empty, nothing at rear" << endl : cout << "The element in rear is: " << linear_queue.rear() << endl;
+            queue->isEmpty() ? cout << "Queue is empty, nothing at rear" << endl : cout << "The element in rear is: " << queue->rear() << endl;
             break;
 
         case 7: //  Count
-            cout << "There are " << linear_queue.count() << " number of elements in queue" << endl;
+            cout << "There are " << queue->count() << " number of elements in queue" << endl;
 
             break;
 
         case 8: // Display Stack
-            linear_queue.display();
+            queue->display();
             break;
 
         case 9: // clear screen
@@ -89,5 +93,6 @@ int main()
 
     } while (option != 0);
 
+    delete queue;
     return 0;
 }

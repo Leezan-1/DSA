@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-#include "Stack.h"
+#include "stack.h"
 
 LinkedListStack::Numeric::Stack stack1;
 

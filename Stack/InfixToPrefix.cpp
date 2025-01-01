@@ -6,7 +6,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-#include "Stack.h"
+#include "stack.h"
 
 string removeSpace(const string &expression)
 {
