@@ -74,7 +74,7 @@ namespace ArrayStack
             void display()
             {
                 cout << "All values in the stack are" << endl;
-                for (int i = STACK_SIZE - 1; i >= 0; i--)
+                for (int i = top; i >= 0; i--)
                 {
                     cout << "|" << "\t" << stack_array[i] << "\t" << "|" << endl;
                 }
