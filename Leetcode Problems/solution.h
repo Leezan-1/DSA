@@ -3,6 +3,11 @@
 
 class Solution
 {
+private:
+    int mapSymbol(char sym);
+
+    bool checkPrime(int num);
+    
 public:
     vector<int> twoSum(vector<int> &nums, int target);
 
@@ -11,6 +16,8 @@ public:
     int commonFactors(int a, int b);
 
     int romanToInt(string s);
+
+    int countPrimes(int n);
 };
 
 #endif
