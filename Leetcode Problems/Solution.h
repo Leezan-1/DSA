@@ -9,6 +9,8 @@ public:
     bool isPalindrome(int x);
 
     int commonFactors(int a, int b);
+
+    int romanToInt(string s);
 };
 
 #endif

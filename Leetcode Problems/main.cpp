@@ -12,6 +12,7 @@ using std::vector;
 #include "TwoSum.cpp"
 #include "PalindromeNumber.cpp"
 #include "CommonFactors.cpp"
+#include "RomanToInt.cpp"
 
 int main()
 {
@@ -39,6 +40,15 @@ int main()
     commonFactorsDisplay(ncf_case1[0], ncf_case1[1]);
     commonFactorsDisplay(ncf_case2[0], ncf_case2[1]);
     commonFactorsDisplay(ncf_case3[0], ncf_case3[1]);
+    
+    // 13. Roman to Integer
+    cout << "\n~~ 13. Roman to Integer ~~\n";
+    string rti_case1 = "III", rti_case2 = "LVIII", rti_case3="MCMXCIV", rti_case4="D";
+
+    romanToIntDisplay(rti_case1);
+    romanToIntDisplay(rti_case2);
+    romanToIntDisplay(rti_case3);
+    romanToIntDisplay(rti_case4);
     
     return 0;
 }
