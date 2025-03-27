@@ -7,7 +7,6 @@ using namespace std;
 #include "CircularSinglyLinkedList.h"
 #include "CircularDoublyLinkedList.h"
 
-
 int chooseLinkedList()
 {
     int choice;
@@ -27,7 +26,7 @@ int chooseLinkedList()
 
     } while (choice < 0 || choice > 4);
 
-    return choice=3;
+    return choice = 3;
 }
 
 template <typename T>
@@ -159,12 +158,14 @@ int main()
     int choice = chooseLinkedList();
     switch (choice)
     {
-    case 1: {
+    case 1:
+    {
         Singly list;
         linkedListFunctionMenu(list);
         break;
     }
-    case 2: {
+    case 2:
+    {
         Doubly list;
         linkedListFunctionMenu(list);
         break;
@@ -175,7 +176,8 @@ int main()
         linkedListFunctionMenu(list);
         break;
     }
-    case 4: {
+    case 4:
+    {
         CircularDoubly list;
         linkedListFunctionMenu(list);
         break;

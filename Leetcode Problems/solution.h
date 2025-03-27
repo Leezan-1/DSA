@@ -7,17 +7,25 @@ private:
     int mapSymbol(char sym);
 
     bool checkPrime(int num);
-    
+
 public:
+    // 1. Two Sum
     vector<int> twoSum(vector<int> &nums, int target);
 
+    // 9. Palindrome Number
     bool isPalindrome(int x);
 
-    int commonFactors(int a, int b);
-
+    // 13. Roman to Integer
     int romanToInt(string s);
 
+    // 26. Remove Duplicates from Sorted Array
+    int removeDuplicates(vector<int> &nums);
+
+    // 204. Count Primes
     int countPrimes(int n);
+
+    // 2427. Number of Common Factors
+    int commonFactors(int a, int b);
 };
 
 #endif

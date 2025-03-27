@@ -9,7 +9,6 @@ using std::string;
 using std::vector;
 
 #include "solution.cpp"
-#include "SolutionDisplay.cpp"
 
 int main()
 {
@@ -32,16 +31,24 @@ int main()
 
     // 13. Roman to Integer
     cout << "\n~~ 13. Roman to Integer ~~\n";
-    string rti_case1 = "III", rti_case2 = "LVIII", rti_case3="MCMXCIV", rti_case4="D";
+    string rti_case1 = "III", rti_case2 = "LVIII", rti_case3 = "MCMXCIV", rti_case4 = "D";
 
     romanToIntDisplay(rti_case1);
     romanToIntDisplay(rti_case2);
     romanToIntDisplay(rti_case3);
     romanToIntDisplay(rti_case4);
-    
+
+    // 26. Remove Duplicates from Sorted Array
+    cout << "\n~~26. Remove Duplicates from Sorted Array ~~\n";
+    vector<int> rd_case1 = {1, 2, 2, 3, 4};
+    vector<int> rd_case2 = {0, 0, 1, 1, 1, 2, 2, 3, 3, 4};
+
+    removeDuplicateDisplay(rd_case1);
+    removeDuplicateDisplay(rd_case2);
+
     // 204. Count Primes
     cout << "\n~~ 204. Count Primes ~~\n";
-    int cp_case1= 10, cp_case2=0, cp_case3=1;
+    int cp_case1 = 10, cp_case2 = 0, cp_case3 = 1;
 
     countPrimesDisplay(cp_case1);
     countPrimesDisplay(cp_case2);
@@ -54,6 +61,6 @@ int main()
     commonFactorsDisplay(ncf_case1[0], ncf_case1[1]);
     commonFactorsDisplay(ncf_case2[0], ncf_case2[1]);
     commonFactorsDisplay(ncf_case3[0], ncf_case3[1]);
-    
+
     return 0;
 }
