@@ -14,6 +14,9 @@
 // 26. Remove Duplicates
 #include "./26removeDuplicates.cpp"
 
+// 66. Plus One
+#include "./66plusOne.cpp"
+
 // 204. Count Primes
 #include "./204countPrimes.cpp"
 

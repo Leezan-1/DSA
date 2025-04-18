@@ -21,6 +21,9 @@ public:
     // 26. Remove Duplicates from Sorted Array
     int removeDuplicates(vector<int> &nums);
 
+    // 66. Plus One
+    vector<int> plusOne(vector<int> &digits);
+
     // 204. Count Primes
     int countPrimes(int n);
 
